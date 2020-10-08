@@ -1,0 +1,40 @@
+<section class="my-8 w-full lg:w-3/4 mx-auto">
+  <div>
+    <p class="text-red-500 font-semibold">
+      <a href="/admin/<%= @account_slug %>/<%= @recruiter_slug %>">
+        &larr; Back to the dashboard
+      </a>
+    </p>
+  </div>
+</section>
+
+<section class="w-full lg:w-3/4 mx-auto">
+  <% if flash %>
+    <%= erb :'shared/alert', locals: { flash: flash  } %>
+  <% end %>
+</section>
+
+
+<div class="w-full lg:w-3/4 mx-auto my-6 flex items-center justify-between">
+  <div class="w-4/5">
+    <p class="font-bold text-2xl mb-1">
+      Projects
+    </p>
+  </div>
+  <div class="">
+    <a href="/admin/<%= @slug %>/project/new">
+      <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
+        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
+        <span>New project</span>
+      </button>
+    </a>
+  </div>
+</div>
+
+<div class="w-full lg:w-3/4 mx-auto">
+  <% @projects.each do |project| %>
+    <div class="">
+      <%= erb :'admin/projects/_project', locals: { project: project  } %>
+    </div>
+  <% end %>
+</div>

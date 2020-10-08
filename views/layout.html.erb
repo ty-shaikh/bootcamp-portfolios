@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Easy bootcamp portfolios | Class Folio">
+    <meta property="og:description" content="Build your portfolio in minutes.">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="http://www.classfol.io/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/tailwind.min.css">
+
+    <!-- JavaScript -->
+
+    <title>Build your portfolio in minutes - Class Folio</title>
+  </head>
+  <body class="antialiased font-sans bg-white">
+
+    <nav class="flex items-center justify-between flex-wrap p-6 mt-6 container w-full lg:w-3/4 mx-auto text-xl lg:text-base">
+      <div class="flex items-center flex-shrink-0 ">
+        <p class="mr-6 text-gray-600">
+          <a href="/" class="">
+            <span class="font-semibold text-xl tracking-tight">Class Folio</span>
+          </a>
+        </p>
+      </div>
+      <div class="block lg:flex lg:items-center lg:w-auto justify-end">
+        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0">
+          <a href="/login" class="">Sign In</a>
+        </p>
+        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0 mr-2">
+          <a href="/register" class="">Create an Account</a>
+        </p>
+      </div>
+    </nav>
+    <hr>
+
+    <div class="container mx-auto w-full">
+      <%= yield %>
+    </div>
+
+    <div class="mt-32">
+      <hr>
+      <footer class="py-8 text-center text-gray-600">
+        <p>
+          <a href="http://www.hyperplane.co" target="_blank" class="text-blue-600 hover:underline">
+            Made by Hyperplane
+          </a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+.reset-text ul {
+  display: block;
+  list-style: disc outside none;
+  margin: 1em 0;
+  padding: 0 0 0 40px;
+}
+
+.reset-text ol {
+  display: block;
+  list-style: disc outside none;
+  list-style-type: decimal;
+  margin: 1em 0;
+  padding: 0 0 0 40px;
+}
+
+.reset-text h1 {
+  display: block;
+  font-size: 2em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reset-text h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reset-text h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.reset-text a {
+  color: blue;
+}

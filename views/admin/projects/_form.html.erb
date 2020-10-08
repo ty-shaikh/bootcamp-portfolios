@@ -1,0 +1,71 @@
+<div class="w-full">
+  <div class="">
+    <div class="pt-6 pb-4">
+
+      <div class="mb-4">
+        <label class="block text-gray-700 lg:text-sm font-bold mb-2">
+          Project Title
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="text" name="title" value="<%= project.title %>"required>
+        <p class="text-gray-600 text-sm lg:text-xs italic">Please specify a title like "Marketing Manager".</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Project Summary
+        </label>
+        <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="2" name="summary" required><%= project.summary %></textarea>
+        <p class="text-gray-600 text-xs italic">A brief summary of your project.</p>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 lg:text-sm font-bold mb-2">
+          Project Description
+        </label>
+        <div id="editor"><%= project.description %></div>
+        <input id="hiddenArea" name="description" value="" type="hidden" style="display: none;">
+        <p class="text-gray-600 text-sm lg:text-xs italic mt-2">Describe your project in full detail.</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Setup toolbar options
+  var toolbarOptions = [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline'],        // toggled buttons
+
+    // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+
+    ['clean']                                         // remove formatting button
+  ];
+
+  // Initialize editor
+  var quill = new Quill('#editor', {
+    modules: {
+      toolbar: toolbarOptions
+    },
+    theme: 'snow'
+  });
+
+  // Update hidden field
+  const hidden = document.querySelector('#hiddenArea');
+  let quillVal = quill.container.firstChild.innerHTML;
+  hidden.value = quillVal;
+
+  quill.on('text-change', function() {
+    let quillVal = quill.container.firstChild.innerHTML;
+    hidden.value = quillVal;
+  });
+</script>
+
+<style>
+  #editor {
+    height: 350px;
+  }
+</style>
