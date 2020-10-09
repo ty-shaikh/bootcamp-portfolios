@@ -3,7 +3,7 @@
     Edit this project
   </div>
   <section class="">
-    <form method="POST" action="/admin/<%= @slug %>/projects/<%= @project.slug %>">
+    <form method="POST" action="/admin/<%= @slug %>/projects/<%= @project.slug %>" enctype="multipart/form-data">
       <input name="_method" value="patch" type="hidden">
       <%= erb :'admin/projects/_form', locals: { project: @project } %>
       <div class="flex items-center justify-between">
@@ -17,3 +17,23 @@
     </form>
   </section>
 </div>
+
+
+<script>
+  let descBox = new SimpleMDE({
+    element: document.getElementById("description"),
+    status: false,
+  });
+
+</script>
+
+<script>
+  const uploadField = document.getElementById("graphic-upload");
+
+  uploadField.onchange = function() {
+    if(this.files[0].size > 1097152){
+       alert("File is too big!");
+       this.value = "";
+    };
+  };
+</script>

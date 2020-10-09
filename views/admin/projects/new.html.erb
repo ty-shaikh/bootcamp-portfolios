@@ -3,7 +3,7 @@
     Add a new project
   </div>
   <section class="">
-    <form method="POST" action="/admin/<%= @slug %>/project">
+    <form method="POST" action="/admin/<%= @slug %>/project" enctype="multipart/form-data">
       <%= erb :'admin/projects/_form', locals: { project: @project } %>
       <div class="flex items-center justify-between">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
@@ -16,3 +16,23 @@
     </form>
   </section>
 </div>
+
+
+<script>
+  let descBox = new SimpleMDE({
+    element: document.getElementById("description"),
+    status: false,
+  });
+
+</script>
+
+<script>
+  const uploadField = document.getElementById("graphic-upload");
+
+  uploadField.onchange = function() {
+    if(this.files[0].size > 1097152){
+       alert("File is too big!");
+       this.value = "";
+    };
+  };
+</script>

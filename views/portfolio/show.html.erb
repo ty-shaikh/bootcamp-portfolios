@@ -1,0 +1,37 @@
+<% content_for :head do %>
+  <title><%= @account.name %> - Portfolio</title>
+<% end %>
+
+<section class="mt-8">
+  <div class="float-right">
+    <% if (@project.source_code) and (!@project.source_code.empty?) %>
+    <a href="<%= @project.source_code %>" target="_blank">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white text-2xl lg:text-base font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Source code
+      </button>
+    </a>
+    <% end %>
+  </div>
+  <div>
+    <p class="text-red-500 font-semibold text-2xl lg:text-base">
+      <a href="/<%= @account.slug %>">
+        &larr; Back to all projects
+      </a>
+    </p>
+  </div>
+</section>
+
+<section class="mt-10">
+  <%= erb :'portfolio/_project', locals: { project: @project } %>
+</section>
+
+<section class="mb-4">
+  <div class="text-3xl lg:text-base rounded border border-gray-300 bg-white px-10 py-2">
+    <p class="markdown-text text-black"><%= @project.description %></p>
+  </div>
+</section>
+
+<script>
+  const markdownText = Array.from(document.querySelectorAll('.markdown-text'));
+  markdownText.forEach(text => text.innerHTML = marked(text.innerHTML))
+</script>

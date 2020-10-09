@@ -42,7 +42,7 @@
     <p class="font-bold text-2xl">
       <%= @project.title %>
     </p>
-    <div class="markdown-text">
+    <div class="mt-4">
       <p class="text-gray-600">
         <%= @project.summary %>
       </p>
@@ -58,10 +58,14 @@
   </div>
 </div>
 
-<div class="rounded shadow my-4 bg-white w-full lg:w-5/6 mx-auto">
-  <div class="p-8">
-    <p>
-      <%= @project.description %>
-    </p>
+<div class="rounded shadow my-4 bg-white w-full lg:w-5/6 mx-auto mb-20">
+  <div class="px-10 py-2">
+    <p class="markdown-text"><%= @project.description %></p>
   </div>
 </div>
+
+
+<script>
+  const markdownText = Array.from(document.querySelectorAll('.markdown-text'));
+  markdownText.forEach(text => text.innerHTML = marked(text.innerHTML))
+</script>

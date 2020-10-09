@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <meta charset="utf-8">
+
+    <%= yield_content :social %>
+    <%= yield_content :head %>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/tailwind.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <!-- JavaScript -->
+    <script src="/marked.min.js"></script>
+
+    <title>Build your portfolio in minutes - Class Folio</title>
+  </head>
+  <body class="antialiased font-sans bg-gray-100">
+
+    <nav class="flex items-center justify-between flex-wrap p-6 mt-6 container w-full lg:w-3/4 mx-auto text-xl lg:text-base">
+      <div class="flex items-center flex-shrink-0 ">
+        <p class="mr-6 text-gray-600">
+          <a href="/<%= @account.slug %>">
+            <span class="font-semibold text-2xl lg:text-xl tracking-tight"><%= @account.name %></span>
+          </a>
+        </p>
+      </div>
+      <div class="block lg:flex lg:items-center lg:w-auto justify-end">
+        <% if (@account.resume) and (!@account.resume.empty?) %>
+        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0">
+          <a href="/resumes/<%= @account.resume %>" target="_blank">Resume</a>
+        </p>
+        <% end %>
+        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0 mr-2">
+          <a href="/<%= @account.slug %>/contact" class="">Contact Me</a>
+        </p>
+      </div>
+    </nav>
+    <hr>
+
+    <div class="container mx-auto w-full lg:w-3/5">
+      <%= yield %>
+    </div>
+
+    <div class="mt-64">
+      <hr>
+      <footer class="py-8 text-center text-gray-600 text-xl lg:text-base">
+        <p>
+          Build your portfolio in minutes -
+          <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
+            Class Folio
+          </a>
+        </p>
+      </footer>
+    </div>
+
+  </body>
+</html>

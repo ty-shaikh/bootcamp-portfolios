@@ -1,0 +1,33 @@
+<section class="mt-12 mb-16">
+  <div class="text-center">
+    <div class="">
+      <p class="text-6xl font-bold text-black">
+        <%= @account.name %>
+      </p>
+    </div>
+    <div class="mb-6 max-w-3xl m-auto">
+      <p class="text-4xl w-2/3 lg:w-full mx-auto lg:text-3xl text-gray-600">
+        <%= @account.summary %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="my-4">
+  <div class="mb-8">
+    <p class="text-3xl lg:text-xl uppercase text-gray-600 font-semibold text-center tracking-wider">
+      Projects
+    </p>
+  </div>
+  <% if @projects.nil? or @projects.empty? %>
+    <p class="text-xl text-center">
+      There are no projects here. Please add one!
+    </p>
+  <% elsif @projects %>
+    <% @projects.each do |project| %>
+      <a href="<%= params['account'] %>/<%= project.slug %>">
+        <%= erb :'portfolio/_project', locals: { project: project } %>
+      </a>
+    <% end %>
+  <% end %>
+</section>

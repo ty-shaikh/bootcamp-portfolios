@@ -61,6 +61,17 @@ get '/' do
   erb :landing, :layout => :layout
 end
 
+get '/support' do
+  erb :support, :layout => :layout
+end
+
+post '/support' do
+  Mailer.support_request(params['name'], params['email'], params['question'])
+  flash[:heading] = "Your message has been sent"
+  flash[:subheading] = "We will respond within the next 48 hours."
+  redirect '/confirm'
+end
+
 get '/confirm' do
   erb :"shared/confirm", :layout => :layout
 end
@@ -110,8 +121,8 @@ post '/forgot' do
     end
 
     # send email notification
-    # recipient = settings.development? ? 'me@tyshaikh.com' : email
-    # Mailer.password_reset(recipient, password)
+    recipient = settings.development? ? 'me@tyshaikh.com' : email
+    Mailer.password_reset(recipient, password)
 
     flash[:heading] = "Your password has been reset"
     flash[:subheading] = "We sent an email with instructions. Please check all your Gmail tabs and spam folder."
@@ -160,19 +171,20 @@ post '/register' do
     )
 
     account = OpenStruct.new(
-      slug: slug,
+      name: params['name'],
+      summary: params['summary'],
+      email: email,
       headshot: 'placeholder.png',
       resume: '',
-      summary: params['summary'],
-      user_email: email,
+      slug: slug,
     )
 
     # Send welcome emails
-    # recipient = settings.development? ? 'me@tyshaikh.com' : user.email
-    # Mailer.new_account(recipient)
+    recipient = settings.development? ? 'me@tyshaikh.com' : user.email
+    Mailer.new_account(recipient)
 
     # Notify me of new signup
-    # Mailer.new_signup(params['personal-name'], recipient)
+    Mailer.new_signup(params['name'])
 
     # Save user
     users.transaction do
@@ -348,10 +360,26 @@ post '/admin/:account/project' do
   date = Time.now
   project_slug = create_slug(params["title"])
 
+  if params['graphic'] && params['graphic']['filename']
+    filename = params['graphic']['filename']
+    file = params['graphic']['tempfile']
+
+    # Create unique filename
+    new_filename = date.strftime('%s') + '-' + filename
+    path = "./public/graphics/#{new_filename}"
+
+    # Write file to disk
+    File.open(path, 'wb') do |f|
+      f.write(file.read)
+    end
+  end
+
   project = OpenStruct.new(
     title: params["title"],
     summary: params["summary"],
+    source_code: params["source-code"],
     description: params["description"],
+    graphic: new_filename || '',
     created: date,
     slug: project_slug
   )
@@ -387,10 +415,29 @@ end
 patch '/admin/:account/projects/:id' do
   project_slug = params['id']
   project = DB.current_project(@slug, project_slug)
+  date = Time.now
+
+  if params['graphic'] && params['graphic']['filename']
+    filename = params['graphic']['filename']
+    file = params['graphic']['tempfile']
+
+    # Create unique filename
+    new_filename = date.strftime('%s') + '-' + filename
+    path = "./public/graphics/#{new_filename}"
+
+    # Write file to disk
+    File.open(path, 'wb') do |f|
+      f.write(file.read)
+    end
+
+    # only update field if new image
+    project.graphic = new_filename
+  end
 
   # Update values
   project.title = params["title"]
   project.summary = params["summary"]
+  project.source_code = params["source-code"]
   project.description = params["description"]
 
   store = YAML::Store.new "./data/#{@slug}/projects.store"
@@ -416,3 +463,55 @@ end
 ########
 ## Public Portfolios
 ########
+
+def get_client_data
+  slug = params['account']
+  project_slug = params['id']
+  account = DB.current_account(param['account'])
+
+  return account, recruiter, positions
+end
+
+get '/:account' do
+  @account = DB.current_account(params['account'])
+  @projects = DB.current_projects(@account.slug)
+  erb :"portfolio/index", :layout => :"portfolio/layout"
+end
+
+get '/:account/contact' do
+  @account = DB.current_account(params['account'])
+  erb :"portfolio/contact", :layout => :"portfolio/layout"
+end
+
+post '/:account/contact' do
+  @account = DB.current_account(params['account'])
+  recipient = settings.development? ? 'me@tyshaikh.com' : @account.email
+  Mailer.contact_request(recipient, params['name'], params['email'], params['message'])
+
+  flash[:success] = "We have sent your message."
+  redirect "/#{@account.slug}/contact"
+end
+
+get '/:account/:id' do
+  @account = DB.current_account(params['account'])
+  @project = DB.current_project(@account.slug, params['id'])
+  erb :"portfolio/show", :layout => :"portfolio/layout"
+end
+
+get '/:account/:id/preview' do
+  @account = DB.current_account(params['account'])
+  @project = DB.current_project(@account.slug, params['id'])
+  erb :"portfolio/preview", :layout => :"client/layout"
+end
+
+# 404 and 500 route handlers
+not_found do
+  status 404
+  erb :'404', :layout => :layout
+end
+
+error do
+  status 500
+  # @error = request.env['sinatra_error'].name
+  erb :'500', :layout => :layout
+end

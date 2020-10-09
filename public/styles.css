@@ -46,3 +46,35 @@
 .reset-text a {
   color: blue;
 }
+
+
+.markdown-text > * {
+  margin: 1em 0;
+}
+
+.markdown-text > ul, .markdown-text > ol, .editor-preview-active-side > ul, .editor-preview-active-side > ol {
+    display: block;
+    list-style: disc outside none;
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+}
+
+.markdown-text ol, .editor-preview-active-side ol {
+  list-style-type: decimal;
+}
+
+.markdown-text p > a, .editor-preview-active-side p > a {
+  color: blue;
+}
+.markdown-text p a, .editor-preview-active-side p a {
+  color: blue;
+}
+
+.markdown-text > *, .editor-preview-active-side > * {
+  font-size: revert;
+  font-weight: revert;
+}
+
+.markdown-text blockquote, .editor-preview-active-side blockquote {
+  margin: revert;
+}

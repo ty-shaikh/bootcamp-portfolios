@@ -1,11 +1,5 @@
-spec/
-tmp/
 data/
-archive/
 
 .DS_Store
 .env
-config.ru
-README.md
-puma.rb
 *.md
