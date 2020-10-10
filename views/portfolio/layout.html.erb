@@ -2,10 +2,22 @@
 <html lang="en" dir="ltr">
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <meta charset="utf-8">
 
     <%= yield_content :social %>
     <%= yield_content :head %>
+
+    <title><%= @account.name || 'Class' %> - Portfolio</title>
+
+    <meta charset="utf-8">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Easy portfolios | Class Folio">
+    <meta property="og:description" content="Build your portfolio in minutes.">
+    <meta property="og:image" content="http://www.classfol.io/open-graph.jpg">
+    <meta property="og:url" content="http://www.classfol.io/">
+    <meta name="twitter:card" content="summary_large_image">
+
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="/tailwind.min.css">
@@ -15,7 +27,6 @@
     <!-- JavaScript -->
     <script src="/marked.min.js"></script>
 
-    <title>Build your portfolio in minutes - Class Folio</title>
   </head>
   <body class="antialiased font-sans bg-gray-100">
 
