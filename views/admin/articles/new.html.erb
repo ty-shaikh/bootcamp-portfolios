@@ -1,0 +1,38 @@
+<div class="rounded shadow my-8 bg-white w-full lg:w-2/3 p-10 mx-auto">
+  <div class="font-bold text-2xl">
+    Add a new article
+  </div>
+  <section class="">
+    <form method="POST" action="/admin/<%= @slug %>/article" enctype="multipart/form-data">
+      <%= erb :'admin/articles/_form', locals: { article: @article } %>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Submit article
+        </button>
+        <a href="/admin/<%= @slug %>/articles" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          Go back
+        </a>
+      </div>
+    </form>
+  </section>
+</div>
+
+
+<script>
+  let descBox = new SimpleMDE({
+    element: document.getElementById("description"),
+    status: false,
+  });
+
+</script>
+
+<script>
+  const uploadField = document.getElementById("graphic-upload");
+
+  uploadField.onchange = function() {
+    if(this.files[0].size > 1097152){
+       alert("File is too big!");
+       this.value = "";
+    };
+  };
+</script>

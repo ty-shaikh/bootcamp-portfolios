@@ -13,21 +13,32 @@
   </div>
 </section>
 
+<% if @projects.length > 0 %>
 <section class="my-4">
   <div class="mb-8">
     <p class="text-3xl lg:text-xl uppercase text-gray-600 font-semibold text-center tracking-wider">
       Projects
     </p>
   </div>
-  <% if @projects.nil? or @projects.empty? %>
-    <p class="text-xl text-center">
-      There are no projects here. Please add one!
-    </p>
-  <% elsif @projects %>
-    <% @projects.each do |project| %>
-      <a href="<%= params['account'] %>/<%= project.slug %>">
-        <%= erb :'portfolio/_project', locals: { project: project } %>
-      </a>
-    <% end %>
+  <% @projects.each do |project| %>
+    <a href="<%= params['account'] %>/<%= project.slug %>">
+      <%= erb :'portfolio/_project', locals: { project: project } %>
+    </a>
   <% end %>
 </section>
+<% end %>
+
+<% if @articles.length > 0 %>
+<section class="my-4">
+  <div class="mb-8">
+    <p class="text-3xl lg:text-xl uppercase text-gray-600 font-semibold text-center tracking-wider">
+      Articles
+    </p>
+  </div>
+  <% @articles.each do |article| %>
+    <a href="<%= params['account'] %>/blog/<%= article.slug %>">
+      <%= erb :'portfolio/_article', locals: { article: article } %>
+    </a>
+  <% end %>
+</section>
+<% end %>

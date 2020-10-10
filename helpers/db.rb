@@ -27,7 +27,24 @@ class DB
     store.transaction(true) do
       store.roots.each { |root| items.append(store[root]) }
     end
-    
+
+    return items.reverse
+  end
+
+  def self.current_article(slug, item_slug)
+    store = YAML::Store.new "./data/#{slug}/articles.store"
+    item = store.transaction { store[item_slug] }
+    return item
+  end
+
+  def self.current_articles(slug)
+    items = []
+    store = YAML::Store.new "./data/#{slug}/articles.store"
+
+    store.transaction(true) do
+      store.roots.each { |root| items.append(store[root]) }
+    end
+
     return items.reverse
   end
 

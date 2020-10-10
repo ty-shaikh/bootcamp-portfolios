@@ -18,14 +18,14 @@
 <div class="w-full lg:w-3/4 mx-auto my-6 flex items-center justify-between">
   <div class="w-4/5">
     <p class="font-bold text-2xl mb-1">
-      Projects
+      Articles
     </p>
   </div>
   <div class="">
-    <a href="/admin/<%= @slug %>/project/new">
+    <a href="/admin/<%= @slug %>/article/new">
       <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
         <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
-        <span>New project</span>
+        <span>New article</span>
       </button>
     </a>
   </div>
@@ -33,17 +33,17 @@
 
 <div class="w-full lg:w-3/4 mx-auto">
 
-  <% if @projects.length == 0 %>
+  <% if @articles.length == 0 %>
   <div class="rounded shadow my-4 p-8 bg-white">
     <p>
-      There are no projects published yet. Create one now!
+      There are no articles published yet. Create one now!
     </p>
   </div>
   <% end %>
 
-  <% @projects.each do |project| %>
+  <% @articles.each do |article| %>
     <div class="">
-      <%= erb :'admin/projects/_project', locals: { project: project  } %>
+      <%= erb :'admin/articles/_article', locals: { article: article  } %>
     </div>
   <% end %>
 </div>

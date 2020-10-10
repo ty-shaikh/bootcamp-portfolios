@@ -199,6 +199,7 @@ post '/register' do
     # Create folders and files
     Dir.mkdir("./data/#{slug}")
     FileUtils.cp("./data/seed.store", "./data/#{slug}/projects.store")
+    File.write("./data/#{slug}/.articles", "")
 
     flash[:slug] = slug
     redirect '/confirmation'
@@ -461,20 +462,134 @@ delete '/admin/:account/projects/:id' do
 end
 
 ########
-## Public Portfolios
+## Admin Articles
 ########
 
-def get_client_data
-  slug = params['account']
-  project_slug = params['id']
-  account = DB.current_account(param['account'])
+# @slug, @user, @account
 
-  return account, recruiter, positions
+# View all articles
+get '/admin/:account/articles' do
+  @articles = DB.current_articles(@slug)
+  erb :"admin/articles/index", :layout => :"admin/layout"
 end
+
+# View form to add a new article
+get '/admin/:account/article/new' do
+  @article = OpenStruct.new()
+  erb :"admin/articles/new", :layout => :"admin/layout"
+end
+
+# Create a new article
+post '/admin/:account/article' do
+  date = Time.now
+  article_slug = create_slug(params["title"])
+
+  if params['graphic'] && params['graphic']['filename']
+    filename = params['graphic']['filename']
+    file = params['graphic']['tempfile']
+
+    # Create unique filename
+    new_filename = date.strftime('%s') + '-' + filename
+    path = "./public/graphics/#{new_filename}"
+
+    # Write file to disk
+    File.open(path, 'wb') do |f|
+      f.write(file.read)
+    end
+  end
+
+  article = OpenStruct.new(
+    title: params["title"],
+    summary: params["summary"],
+    description: params["description"],
+    graphic: new_filename || '',
+    created: date,
+    slug: article_slug
+  )
+
+  # Save new position
+  store = YAML::Store.new "./data/#{@slug}/articles.store"
+  store.transaction do
+    store[article_slug] = article
+  end
+
+  # Generate social open graph image (??)
+  ##########
+
+  flash[:success] = "You added a new article."
+  redirect "/admin/#{@slug}/articles"
+end
+
+# Show details about an article
+get '/admin/:account/articles/:id' do
+  article_slug = params['id']
+  @article = DB.current_article(@slug, article_slug)
+  erb :"admin/articles/show", :layout => :"admin/layout"
+end
+
+# Show edit form for an article
+get '/admin/:account/articles/:id/edit' do
+  article_slug = params['id']
+  @article = DB.current_article(@slug, article_slug)
+  erb :"admin/articles/edit", :layout => :"admin/layout"
+end
+
+# Update an existing article
+patch '/admin/:account/articles/:id' do
+  article_slug = params['id']
+  article = DB.current_article(@slug, article_slug)
+  date = Time.now
+
+  if params['graphic'] && params['graphic']['filename']
+    filename = params['graphic']['filename']
+    file = params['graphic']['tempfile']
+
+    # Create unique filename
+    new_filename = date.strftime('%s') + '-' + filename
+    path = "./public/graphics/#{new_filename}"
+
+    # Write file to disk
+    File.open(path, 'wb') do |f|
+      f.write(file.read)
+    end
+
+    # only update field if new image
+    article.graphic = new_filename
+  end
+
+  # Update values
+  article.title = params["title"]
+  article.summary = params["summary"]
+  article.description = params["description"]
+
+  store = YAML::Store.new "./data/#{@slug}/articles.store"
+  store.transaction do
+    store[article_slug] = article
+  end
+
+  flash[:success] = "You updated the article details."
+  redirect "/admin/#{@slug}/articles/#{article_slug}"
+end
+
+# Delete an existing article
+delete '/admin/:account/articles/:id' do
+  article_slug = params['id']
+
+  store = YAML::Store.new "./data/#{@slug}/articles.store"
+  store.transaction { store.delete(article_slug) }
+
+  flash[:success] = "You deleted that article."
+  redirect "/admin/#{@slug}/articles"
+end
+
+########
+## Public Portfolios
+########
 
 get '/:account' do
   @account = DB.current_account(params['account'])
   @projects = DB.current_projects(@account.slug)
+  @articles = DB.current_articles(@account.slug)
   erb :"portfolio/index", :layout => :"portfolio/layout"
 end
 
@@ -492,16 +607,24 @@ post '/:account/contact' do
   redirect "/#{@account.slug}/contact"
 end
 
+# View a project
 get '/:account/:id' do
   @account = DB.current_account(params['account'])
   @project = DB.current_project(@account.slug, params['id'])
-  erb :"portfolio/show", :layout => :"portfolio/layout"
+  erb :"portfolio/show_project", :layout => :"portfolio/layout"
 end
 
 get '/:account/:id/preview' do
   @account = DB.current_account(params['account'])
   @project = DB.current_project(@account.slug, params['id'])
   erb :"portfolio/preview", :layout => :"client/layout"
+end
+
+# View an article
+get '/:account/blog/:id' do
+  @account = DB.current_account(params['account'])
+  @article = DB.current_article(@account.slug, params['id'])
+  erb :"portfolio/show_article", :layout => :"portfolio/layout"
 end
 
 # 404 and 500 route handlers

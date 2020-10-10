@@ -76,36 +76,6 @@
 </div>
 
 <div class="rounded shadow my-8 bg-white w-full lg:w-5/6 p-10 mx-auto">
-  <div class="font-bold text-2xl mb-2 ">
-    Headshot Settings
-  </div>
-  <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2">
-      Your Headshot
-    </label>
-
-    <% if (@account.headshot) and (!@account.headshot.empty?) %>
-    <div class="mb-2">
-      <img src="/headshots/<%= @account.headshot %>" alt="" width="100">
-    </div>
-    <% end %>
-
-    <form class="my-6" method="POST" action="profile/headshot" enctype="multipart/form-data">
-      <input name="_method" value="patch" type="hidden">
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="headshot" type="file" accept="image/jpg, image/jpeg, image/png, image/gif" id="headshot-upload" required>
-      <p class="text-gray-600 text-xs italic mb-2">
-        Please make sure the file is less than 1 MB and is either a JPG or PNG file.
-      </p>
-      <div class="flex items-center justify-between">
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-          Update headshot
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="rounded shadow my-8 bg-white w-full lg:w-5/6 p-10 mx-auto">
   <div class="font-bold text-2xl mb-2">
     Login Settings
   </div>

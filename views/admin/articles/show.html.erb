@@ -1,0 +1,71 @@
+<section class="my-8 w-full lg:w-5/6 mx-auto">
+  <div>
+    <p class="text-red-500 font-semibold">
+      <a href="/admin/<%= @slug %>/articles">
+        &larr; View all articles
+      </a>
+    </p>
+  </div>
+</section>
+
+<section class="w-full lg:w-5/6 mx-auto">
+  <% if flash %>
+    <%= erb :'shared/alert', locals: { flash: flash  } %>
+  <% end %>
+</section>
+
+<div class="rounded shadow my-8 bg-white w-full lg:w-5/6 px-10 py-8 mx-auto">
+
+  <div class="float-right text-right">
+
+    <div class="mr-2 inline-block">
+      <a href="/<%= @slug %>/blog/<%= @article.slug %>" target="_blank">
+        <button class="bg-transparent hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded inline-flex items-center" type="button">
+          <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M.2 10a11 11 0 0 1 19.6 0A11 11 0 0 1 .2 10zm9.8 4a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+          <span>View</span>
+        </button>
+      </a>
+    </div>
+
+    <div class="mr-2 inline-block">
+      <a href="/admin/<%= @slug %>/articles/<%= @article.slug %>/edit">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
+          <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/></svg>
+          <span>Edit</span>
+        </button>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="mb-5 w-4/5">
+    <p class="font-bold text-2xl">
+      <%= @article.title %>
+    </p>
+    <div class="mt-4">
+      <p class="text-gray-600">
+        <%= @article.summary %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="w-full lg:w-5/6 mx-auto my-6 flex items-center justify-between">
+  <div class="w-4/5">
+    <p class="font-bold text-2xl mb-1">
+      Article Description
+    </p>
+  </div>
+</div>
+
+<div class="rounded shadow my-4 bg-white w-full lg:w-5/6 mx-auto mb-20">
+  <div class="px-10 py-2">
+    <p class="markdown-text"><%= @article.description %></p>
+  </div>
+</div>
+
+
+<script>
+  const markdownText = Array.from(document.querySelectorAll('.markdown-text'));
+  markdownText.forEach(text => text.innerHTML = marked(text.innerHTML))
+</script>
