@@ -153,8 +153,11 @@ post '/register' do
   existing_user = users.transaction { users.fetch(email, false) }
   existing_account = accounts.transaction { accounts.fetch(slug, false) }
 
-  if existing_user or existing_account
-    flash[:error] = 'There is already an account using that email or name.'
+  if existing_user
+    flash[:error] = 'There is already an account using that email. Please use a different email.'
+    redirect '/register'
+  elsif existing_account
+    flash[:error] = 'There is already an account using that name. Please use a middle name or nickname.'
     redirect '/register'
   else
     uid = SecureRandom.uuid
