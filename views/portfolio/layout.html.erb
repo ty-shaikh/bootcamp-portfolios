@@ -17,18 +17,32 @@
     <meta property="og:url" content="http://www.classfol.io/">
     <meta name="twitter:card" content="summary_large_image">
 
-
-
     <!-- CSS -->
     <link rel="stylesheet" href="/tailwind.min.css">
     <link rel="stylesheet" href="/styles.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Choose custom favicon -->
+    <% if (@account.favicon) and (!@account.favicon.empty?) %>
+    <link rel="shortcut icon" href="/favicons/<%= @account.favicon %>">
+    <% else %>
     <link rel="shortcut icon" href="/favicon.png">
+    <% end %>
+
+    <!-- Choose custom font -->
+    <% if (@account.font_family) and (!@account.font_family.empty?) %>
+    <style>
+      body { font-family: "<%= @account.font_family %>", sans-serif; }
+    </style>
+    <% end %>
 
     <!-- JavaScript -->
     <script src="/marked.min.js"></script>
 
   </head>
-  <body class="antialiased font-sans bg-gray-100">
+  <body class="antialiased <%= (@account.bg_color == 'white' || @account.bg_color.nil?) ? 'bg-white' : "bg-#{@account.bg_color}-100" %>">
 
     <nav class="flex items-center justify-between flex-wrap p-6 mt-6 container w-full lg:w-3/4 mx-auto text-xl lg:text-base">
       <div class="flex items-center flex-shrink-0 ">
@@ -58,14 +72,63 @@
     <div class="mt-64">
       <hr>
       <footer class="py-8 text-center text-gray-600 text-xl lg:text-base">
-        <p>
-          Build your portfolio in minutes -
-          <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
-            Class Folio
-          </a>
-        </p>
+        <div>
+          <p>
+            Build your portfolio in minutes -
+            <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
+              Class Folio
+            </a>
+          </p>
+        </div>
       </footer>
     </div>
+
+    <!-- Choose accent color -->
+    <% if (@account.accent_color) and (!@account.accent_color.empty?) %>
+      <% @color = @account.accent_color %>
+      <script>
+        const color = "<%= @color %>";
+
+        // Normal buttons
+        const bgClass = `bg-${color}-500`;
+        const hoverClass = `hover:bg-${color}-700`;
+
+        // Transparent buttons
+        const borderClass = `border-${color}-500`;
+        const borderHoverClass = `hover:bg-${color}-500`;
+        const borderTextClass = `text-${color}-700`
+
+        const buttons = Array.from(document.querySelectorAll('button'));
+
+        buttons.forEach(function(button) {
+          if (button.classList.contains("bg-blue-500")) {
+            button.classList.remove("bg-blue-500", "hover:bg-blue-700")
+            button.classList.add(bgClass, hoverClass)
+          }
+
+          if (button.classList.contains("border-blue-500")) {
+            button.classList.remove("border-blue-500", "hover:bg-blue-500", "text-blue-700")
+            button.classList.add(borderClass, borderHoverClass, borderTextClass)
+          }
+        })
+
+        const textClass = `text-${color}-600`
+        const links = Array.from(document.querySelectorAll('div p a'));
+
+        links.forEach(function(link) {
+          if (link.classList.contains("text-blue-600")) {
+            link.classList.remove("text-blue-600")
+            link.classList.add(textClass)
+          }
+        })
+
+        const markdownLinks = Array.from(document.querySelectorAll('.markdown-text p a'));
+        markdownLinks.forEach(function(link) {
+          link.style.color = "#d69e2e"
+        })
+
+      </script>
+    <% end %>
 
   </body>
 </html>

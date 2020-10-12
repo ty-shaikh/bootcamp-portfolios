@@ -179,6 +179,12 @@ post '/register' do
       email: email,
       headshot: 'placeholder.png',
       resume: '',
+      font_family: '',
+      accent_color: 'blue',
+      bg_color: 'gray',
+      dark_mode: 'No',
+      favicon: '',
+      domain: '',
       slug: slug,
     )
 
@@ -342,10 +348,64 @@ patch '/admin/:account/profile/password' do
 end
 
 ########
-## Admin Projects
+## Admin Settings (Premium Tier)
 ########
 
-# @slug, @user, @account
+# Populate with account settings
+get '/admin/:account/settings' do
+  erb :"admin/settings", :layout => :"admin/layout"
+end
+
+# Update your theme
+patch '/admin/:account/settings/theme' do
+  # Update values
+  @account.font_family = params["font_family"]
+  @account.accent_color = params["accent_color"]
+  @account.bg_color = params['bg_color']
+  DB.update_account(@slug, @account)
+
+  flash[:success] = "We have updated your settings."
+  redirect "/admin/#{@slug}/settings"
+end
+
+# Update favicon
+patch '/admin/:account/settings/favicon' do
+
+  if params['icon'] && params['icon']['filename']
+    filename = params['icon']['filename']
+    file = params['icon']['tempfile']
+
+    # Create unique filename
+    date = Time.now
+    new_filename = date.strftime('%s') + '-' + filename
+    path = "./public/favicons/#{new_filename}"
+
+    # Write file to disk
+    File.open(path, 'wb') do |f|
+      f.write(file.read)
+    end
+  end
+
+  # Update reference
+  @account.favicon = new_filename
+  DB.update_account(@slug, @account)
+
+  flash[:success] = "We have updated your custom favicon."
+  redirect "/admin/#{@slug}/settings"
+end
+
+# Remove account favicon
+delete '/admin/:account/settings/favicon' do
+  @account.favicon = ''
+  DB.update_account(@slug, @account)
+
+  flash[:success] = "We have removed your custom favicon."
+  redirect "/admin/#{@slug}/settings"
+end
+
+########
+## Admin Projects
+########
 
 # View all projects
 get '/admin/:account/projects' do
