@@ -1,11 +1,14 @@
 require 'sinatra'
 require 'sinatra/content_for'
 require 'sinatra/flash'
+
 require 'yaml/store'
 require 'ostruct'
 require 'nokogiri'
 require 'securerandom'
 require 'dotenv'
+require 'uri'
+
 require './helpers/mailer'
 require './helpers/auth'
 require './helpers/db'
@@ -50,9 +53,10 @@ helpers do
     !!(current_user)
   end
 
-  def require_admin
-    if @user.role != 'admin'
-      redirect "/admin/#{@account_slug}/#{@recruiter_slug}"
+  def require_premium
+    if @account.premium != true
+      flash[:error] = "You don't have access to that."
+      redirect "/admin/#{@slug}"
     end
   end
 end
@@ -185,6 +189,8 @@ post '/register' do
       dark_mode: 'No',
       favicon: '',
       domain: '',
+      host: '',
+      premium: false,
       slug: slug,
     )
 
@@ -353,6 +359,7 @@ end
 
 # Populate with account settings
 get '/admin/:account/settings' do
+  require_premium
   erb :"admin/settings", :layout => :"admin/layout"
 end
 
@@ -403,6 +410,30 @@ delete '/admin/:account/settings/favicon' do
   redirect "/admin/#{@slug}/settings"
 end
 
+# Update your domain
+patch '/admin/:account/settings/domain' do
+  domain = params["domain"]
+
+  # process domain address
+  uri = URI.parse(domain)
+  host = uri.host
+  host.slice! 'www.' if host.include? 'www.'
+
+  domains = DB.current_domains
+
+  if domains.include? host
+    flash[:error] = "There is already an account using that domain name. Please try another one or contact support."
+    redirect "/admin/#{@slug}/settings"
+  else
+    # Update values
+    @account.domain = domain
+    @account.host = host
+    DB.update_account(@slug, @account)
+    flash[:success] = "We have updated your domain."
+    redirect "/admin/#{@slug}/settings"
+  end
+end
+
 ########
 ## Admin Projects
 ########
@@ -438,12 +469,21 @@ post '/admin/:account/project' do
     end
   end
 
+  # Extract loom video code
+  loom_code = params["loom-video"].gsub("https://www.loom.com/share/", "")
+
+  # Define hidden
+  hidden = params["private"].to_s == 'true' ? true : false
+
   project = OpenStruct.new(
     title: params["title"],
     summary: params["summary"],
     source_code: params["source-code"],
+    loom_url: params["loom-video"],
+    loom_code: loom_code,
     description: params["description"],
     graphic: new_filename || '',
+    hidden: hidden || false,
     created: date,
     slug: project_slug
   )
@@ -502,6 +542,18 @@ patch '/admin/:account/projects/:id' do
   project.title = params["title"]
   project.summary = params["summary"]
   project.source_code = params["source-code"]
+
+  if params["loom-video"]
+    project.loom_url = params["loom-video"]
+    loom_code = params["loom-video"].gsub("https://www.loom.com/share/", "")
+    project.loom_code = loom_code
+  end
+
+  if params["private"]
+    hidden = params["private"].to_s == 'true' ? true : false
+    project.hidden = hidden
+  end
+
   project.description = params["description"]
 
   store = YAML::Store.new "./data/#{@slug}/projects.store"
@@ -649,9 +701,59 @@ end
 ## Public Portfolios
 ########
 
+# Create code for looping hostnames
+hostnames = DB.current_hostnames
+
+hostnames.each do |host|
+  namespace :host_name => host.domain do
+
+    # Set the multi-tenant account
+    before do
+      @other_host = true
+      @other_host_route = ''
+      @account = DB.current_account(host.slug)
+    end
+
+    get '/' do
+      @projects = DB.current_published_projects(@account.slug)
+      @articles = DB.current_articles(@account.slug)
+      erb :"portfolio/index", :layout => :"portfolio/layout"
+    end
+
+    get '/contact' do
+      erb :"portfolio/contact", :layout => :"portfolio/layout"
+    end
+
+    post '/contact' do
+      recipient = settings.development? ? 'me@tyshaikh.com' : @account.email
+      Mailer.contact_request(recipient, params['name'], params['email'], params['message'])
+
+      flash[:success] = "We have sent your message."
+      redirect "/#{@account.slug}/contact"
+    end
+
+    get '/:id' do
+      @project = DB.current_project(@account.slug, params['id'])
+      erb :"portfolio/show_project", :layout => :"portfolio/layout"
+    end
+
+    get '/:id/preview' do
+      @project = DB.current_project(@account.slug, params['id'])
+      erb :"portfolio/preview", :layout => :"client/layout"
+    end
+
+    get '/blog/:id' do
+      @article = DB.current_article(@account.slug, params['id'])
+      erb :"portfolio/show_article", :layout => :"portfolio/layout"
+    end
+
+  end
+end
+
+
 get '/:account' do
   @account = DB.current_account(params['account'])
-  @projects = DB.current_projects(@account.slug)
+  @projects = DB.current_published_projects(@account.slug)
   @articles = DB.current_articles(@account.slug)
   erb :"portfolio/index", :layout => :"portfolio/layout"
 end

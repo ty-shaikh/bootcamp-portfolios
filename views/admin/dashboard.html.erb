@@ -7,7 +7,15 @@
   </p>
 </div>
 
-<div class="w-full lg:w-3/4 mx-auto">
+
+<section class="w-full lg:w-3/4 mx-auto">
+  <% if flash %>
+    <%= erb :'shared/alert', locals: { flash: flash  } %>
+  <% end %>
+</section>
+
+
+<div class="w-full lg:w-3/4 mx-auto my-6">
 
   <div class="flex justify-around">
     <div class="w-2/5 inline-block">
@@ -73,6 +81,7 @@
 
   <div class="flex justify-around">
 
+    <% if @account.premium == true %>
     <div class="w-2/5 inline-block">
       <a href="/admin/<%= @slug %>/settings" class="w-full">
         <div class="flex items-center rounded shadow mb-8 bg-white hover:shadow-lg">
@@ -85,6 +94,7 @@
         </div>
       </a>
     </div>
+    <% end %>
 
     <div class="w-2/5 inline-block">
       <a href="/support" target="_blank" class="w-full">

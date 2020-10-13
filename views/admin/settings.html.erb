@@ -104,43 +104,91 @@
     </div>
   </form>
 
+</div>
+
+<div class="rounded shadow my-8 bg-white w-2/3 p-10 mx-auto">
+  <div class="font-bold text-2xl mb-2 ">
+    Favicon Settings
   </div>
-  <div class="rounded shadow my-8 bg-white w-2/3 p-10 mx-auto">
-    <div class="font-bold text-2xl mb-2 ">
-      Favicon Settings
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+      Your Favicon
+    </label>
+
+    <% if (@account.favicon) and (!@account.favicon.empty?) %>
+    <div class="mb-2">
+        <img src="/favicons/<%= @account.favicon %>" alt="" width="50">
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2">
-        Your Favicon
-      </label>
-
-      <% if (@account.favicon) and (!@account.favicon.empty?) %>
-      <div class="mb-2">
-          <img src="/favicons/<%= @account.favicon %>" alt="" width="50">
-      </div>
-      <div class="mb-2">
-        <form method="POST" action="settings/favicon" onsubmit="return confirm('Are you sure you remove this favicon?');">
-          <div style="margin:0;padding:0">
-            <input name="_method" value="delete" type="hidden" />
-            <button class="text-red-500 font-semibold underline" type="submit">Delete favicon</button>
-          </div>
-        </form>
-      </div>
-      <% end %>
-
-      <form class="my-6" method="POST" action="settings/favicon" enctype="multipart/form-data">
-        <input name="_method" value="patch" type="hidden">
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="icon" type="file" accept="image/png" id="favicon-upload" required>
-        <p class="text-gray-600 text-xs italic mb-2">Make sure you use a PNG file. You can <a href="https://favicon.io/emoji-favicons/" class="underline" target="_blank">find existing favicions here</a>.</p>
-        <div class="flex items-center justify-between">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Update favicon
-          </button>
+    <div class="mb-2">
+      <form method="POST" action="settings/favicon" onsubmit="return confirm('Are you sure you remove this favicon?');">
+        <div style="margin:0;padding:0">
+          <input name="_method" value="delete" type="hidden" />
+          <button class="text-red-500 font-semibold underline" type="submit">Delete favicon</button>
         </div>
       </form>
     </div>
+    <% end %>
 
+    <form class="my-6" method="POST" action="settings/favicon" enctype="multipart/form-data">
+      <input name="_method" value="patch" type="hidden">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="icon" type="file" accept="image/png" id="favicon-upload" required>
+      <p class="text-gray-600 text-xs italic mb-2">Make sure you use a PNG file. You can <a href="https://favicon.io/emoji-favicons/" class="underline" target="_blank">find existing favicions here</a>.</p>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Update favicon
+        </button>
+      </div>
+    </form>
   </div>
+</div>
+
+<div class="rounded shadow my-4 bg-white w-2/3 p-10 mx-auto">
+  <div class="font-bold text-2xl mb-2 ">
+    Domain Settings
+  </div>
+  <form class="my-6" method="POST" action="settings/domain">
+    <input name="_method" value="patch" type="hidden">
+
+    <div class="mb-4">
+      <div class="markdown-text">
+        <p>
+          Setup your custom domain.
+        </p>
+        <ol>
+          <li>
+            <p>
+              You will need to create 2 A records. The first with the hostname "<code>@</code>" and the second with the hostname "<code>www</code>". Point them both to this IP address: "<code>167.71.80.4</code>". Here is an <a href="/domain.png" target="_blank">example of a domain with 2 A records</a> using Google Domains.
+            </p>
+          </li>
+          <li>
+            <p>
+              Enter the domain you have selected in the field below.
+            </p>
+          </li>
+          <li>
+            It will take up to 48 hours to connect your portfolio with the domain.
+          </li>
+          <li>
+            If you are not comfortable changing your domain settings, please reach out and we can help.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        Domain Name
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="domain" type="url" value="<%= @account.domain %>" required>
+      <p class="text-gray-600 text-xs italic">You must put the whole domain name, like "http://www.johnsmith.com/"</p>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Save your settings
+      </button>
+    </div>
+  </form>
 
 </div>
 
