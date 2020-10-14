@@ -1,7 +1,10 @@
 <section class="mt-16 w-full lg:w-1/2 mx-auto">
   <div class="text-center">
-    <div class="text-3xl font-bold mb-8">
-      Login to your account
+    <div class="text-3xl font-bold mb-2">
+      Sign in to your account
+    </div>
+    <div class="text-base text-gray-600 mb-8 max-w-3xl m-auto">
+      <a href="/register" class="text-blue-600 hover:text-blue-400">Or create a new account</a>
     </div>
     <% if flash %>
       <%= erb :'shared/alert', locals: { flash: flash  } %>
@@ -9,13 +12,13 @@
   </div>
 </section>
 
-<section class="my-12 w-full lg:w-1/2 mx-auto">
+<section class="mt-6 mb-12 w-full lg:w-2/5 mx-auto">
   <form method="POST" action="/login">
     <div class="mb-8">
-      <div class="bg-white border rounded px-8 pt-6 mb-6">
+      <div class="bg-white border rounded px-8 py-6 mb-6 shadow-sm">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2">
-            Email
+            Email address
           </label>
           <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" name="email" required>
         </div>
@@ -25,17 +28,17 @@
           </label>
           <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password" required>
         </div>
+        <div class="flex items-center justify-between">
+          <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Sign in
+          </button>
+        </div>
+        <div class="mt-4">
+          <p>
+            <a href="/forgot" class="text-blue-600 hover:underline">Did you forget your password?</a>
+          </p>
+        </div>
       </div>
     </div>
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        Go to dashboard
-      </button>
-    </div>
   </form>
-  <div class="mt-6">
-    <p>
-      <a href="/forgot" class="text-blue-600 hover:underline">Did you forget your password?</a>
-    </p>
-  </div>
 </section>

@@ -1,10 +1,10 @@
 <section class="mt-16 w-1/2 mx-auto">
   <div class="text-center">
     <div class="text-3xl font-bold mb-2">
-      Launch your portfolio today
+      Create a new account
     </div>
-    <div class="text-2xl text-gray-600 mb-8 max-w-3xl m-auto">
-      Fill in the details below to get started.
+    <div class="text-base text-gray-600 mb-8 max-w-3xl m-auto">
+      <a href="/login" class="text-blue-600 hover:text-blue-400">Or login to your account</a>
     </div>
     <% if flash %>
       <%= erb :'shared/alert', locals: { flash: flash  } %>
@@ -12,20 +12,20 @@
   </div>
 </section>
 
-<section class="my-16 w-1/2 mx-auto">
+<section class="mt-6 mb-12 w-2/5 mx-auto">
   <form method="POST" action="/register">
-
-    <div class="mb-8">
-      <p class="font-bold mb-3">
-        Login Details
-      </p>
-      <div class="bg-white border rounded px-8 pt-6 pb-8 mb-4">
+      <div class="bg-white border rounded px-8 pt-6 pb-8 mb-4 shadow-sm">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2">
-            Email
+            Name
+          </label>
+          <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="name" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Email address
           </label>
           <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" name="email" required>
-          <p class="text-gray-600 text-xs italic">Used to login and be notified of product updates.</p>
         </div>
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -34,35 +34,22 @@
           <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password" minlength="8" maxlength="20" required>
           <p class="text-gray-600 text-xs italic">Must be 8 characters or more.</p>
         </div>
-      </div>
-    </div>
-
-    <div class="w-full mb-8">
-      <p class="font-bold mb-3">
-        Personal Details
-      </p>
-      <div class="bg-white border rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2">
-            Your Name
+            Confirm Password
           </label>
-          <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="name" required>
-          <p class="text-gray-600 text-xs italic">Your name will appear on any positions you create.</p>
+          <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password-confirm" minlength="8" maxlength="20" required>
         </div>
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2">
-            Your Summary
-          </label>
-          <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="2" name="summary" required></textarea>
-          <p class="text-gray-600 text-xs italic">A brief description of your background and goals.</p>
+        <div class="flex items-center justify-between">
+          <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Create account
+          </button>
         </div>
       </div>
+
     </div>
 
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        Get started
-      </button>
-    </div>
+
+
   </form>
 </section>

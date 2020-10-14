@@ -163,6 +163,9 @@ post '/register' do
   elsif existing_account
     flash[:error] = 'There is already an account using that name. Please use a middle name or nickname.'
     redirect '/register'
+  elsif params['password'] != params['password-confirm']
+    flash[:error] = "The passwords don't match. Try again."
+    redirect "/register"
   else
     uid = SecureRandom.uuid
     session_id = uid + '-' + params['email']
@@ -186,7 +189,6 @@ post '/register' do
       font_family: '',
       accent_color: 'blue',
       bg_color: 'gray',
-      dark_mode: 'No',
       favicon: '',
       domain: '',
       host: '',

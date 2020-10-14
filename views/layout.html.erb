@@ -16,30 +16,50 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/tailwind.min.css">
 
+    <!-- Fonts -->
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+      }
+    </style>
+
     <!-- JavaScript -->
 
     <title>Build your portfolio in minutes - Class Folio</title>
   </head>
-  <body class="antialiased font-sans bg-white">
+  <body class="antialiased bg-gray-200">
 
-    <nav class="flex items-center justify-between flex-wrap p-6 mt-2 container w-full lg:w-3/4 mx-auto text-xl lg:text-base">
-      <div class="flex items-center flex-shrink-0 ">
-        <p class="mr-6 text-gray-600">
+  <div class="bg-white shadow-xs">
+    <nav class="flex items-center justify-between flex-wrap py-4 container w-full lg:w-3/4 mx-auto text-xl lg:text-base">
+      <div class="flex items-center flex-shrink-0">
+        <img src="brief-logo.png" width="25" alt="" class="mr-3">
+        <p class="mr-6 text-gray-800">
           <a href="/" class="">
-            <span class="font-semibold text-xl tracking-tight">Class Folio</span>
+            <span class="font-semibold text-xl tracking-tight text-blue-600">Class Folio</span>
           </a>
         </p>
       </div>
       <div class="block lg:flex lg:items-center lg:w-auto justify-end">
-        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0">
-          <a href="/login" class="">Sign In</a>
+        <p class="inline-block mr-4">
+          <a href="/register">
+            <button class="bg-transparent hover:bg-blue-600 text-blue-600 font-medium hover:text-white py-2 px-4 border border-transparent rounded" type="button">
+              Get started
+            </button>
+          </a>
         </p>
-        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0 mr-2">
-          <a href="/register" class="">Create an Account</a>
+        <p class="inline-block">
+          <a href="/login">
+            <button class="bg-transparent hover:bg-blue-600 text-blue-600 font-medium hover:text-white py-2 px-4 border border-gray-400 hover:border-transparent rounded" type="button">
+              Login
+            </button>
+          </a>
         </p>
       </div>
     </nav>
     <hr>
+  </div>
 
     <div class="container mx-auto w-full">
       <%= yield %>
