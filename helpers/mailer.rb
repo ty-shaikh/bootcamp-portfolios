@@ -11,7 +11,7 @@ class Mailer
     mb_obj.add_recipient :to, email
 
     mb_obj.subject "Welcome to Class Folio!"
-    mb_obj.body_html "<p>Thanks for creating an account with us!</p><p>You can login to your account, start adding projects here: <a href='http://www.classfol.io/login' target='_blank'>dashboard link<a/>.</p> <p>If you have any questions or feedback, please reach out: support@classfol.io</p>"
+    mb_obj.body_html "<p>Thanks for creating an account with us!</p><p>You can login to your account and start adding projects here: <a href='http://www.classfol.io/login' target='_blank'>portfolio dashboard<a/>.</p> <p>If you have any questions or feedback, please reach out: support@classfol.io</p>"
 
     mg_client.send_message 'mg.classfol.io', mb_obj
   end
