@@ -16,7 +16,7 @@ class Mailer
     mg_client.send_message 'mg.classfol.io', mb_obj
   end
 
-  def self.new_signup(name)
+  def self.new_signup(name, email)
     mg_client = Mailgun::Client.new API_KEY
     mb_obj = Mailgun::MessageBuilder.new()
 

@@ -11,7 +11,7 @@ accounts.transaction(true) do
     account = accounts[root]
 
     slug = account.slug
-    domain = account.domain
+    domain = account.host
 
     next if domain == ''
 

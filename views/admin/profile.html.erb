@@ -1,4 +1,4 @@
-<section class="my-8 w-full lg:w-5/6 mx-auto">
+<section class="my-8 w-full lg:w-1/2 mx-auto">
   <div>
     <p class="text-red-500 font-semibold">
       <a href="/admin/<%= @slug %>">
@@ -8,13 +8,13 @@
   </div>
 </section>
 
-<section class="w-full lg:w-5/6 mx-auto">
+<section class="w-full lg:w-1/2 mx-auto">
   <% if flash %>
     <%= erb :'shared/alert', locals: { flash: flash  } %>
   <% end %>
 </section>
 
-<div class="rounded shadow my-8 bg-white w-full lg:w-5/6 p-10 mx-auto">
+<div class="rounded shadow my-8 bg-white w-full lg:w-1/2 p-10 mx-auto">
   <div class="font-bold text-2xl mb-2">
     Profile Settings
   </div>
@@ -29,9 +29,17 @@
 
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2">
+        Your Name
+      </label>
+      <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="name" value="<%= @account.name %>" required>
+      <p class="text-gray-600 text-xs italic">The slug associated with your portfolio will stay the same.</p>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
         Your Summary
       </label>
-      <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="2" name="summary" required><%= @account.summary %></textarea>
+      <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="2" name="summary" required><%= @account.summary %></textarea>
       <p class="text-gray-600 text-xs italic">A brief description of your background and goals.</p>
     </div>
 
@@ -45,25 +53,20 @@
 </div>
 
 
-<div class="rounded shadow my-8 bg-white w-full lg:w-5/6 p-10 mx-auto">
+<div class="rounded shadow my-8 bg-white w-full lg:w-1/2 p-10 mx-auto">
   <div class="font-bold text-2xl mb-2 ">
     Resume Settings
   </div>
   <div class="mb-4">
-    <label class="block text-gray-700 text-sm font-bold mb-2">
-      Your Resume
-    </label>
-
     <% if (@account.resume) and (!@account.resume.empty?) %>
     <div class="mb-2">
       <a href="/resumes/<%= @account.resume %>" class="text-blue-600" target="_blank">View current resume</a>
     </div>
     <% end %>
-
     <form class="my-6" method="POST" action="profile/resume" enctype="multipart/form-data">
       <input name="_method" value="patch" type="hidden">
       <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="resume" type="file" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/octet-stream" id="resume-upload" required>
-      <p class="text-gray-600 text-sm lg:text-xs italic">
+      <p class="text-gray-600 text-sm lg:text-xs italic mb-4">
         Please use a PDF or Word file. The file must be less than 3 MB.
       </p>
       <div class="flex items-center justify-between">
@@ -75,7 +78,7 @@
   </div>
 </div>
 
-<div class="rounded shadow my-8 bg-white w-full lg:w-5/6 p-10 mx-auto">
+<div class="rounded shadow my-8 bg-white w-full lg:w-1/2 p-10 mx-auto">
   <div class="font-bold text-2xl mb-2">
     Login Settings
   </div>
@@ -92,7 +95,7 @@
       <label class="block text-gray-700 text-sm font-bold mb-2">
         New Password
       </label>
-      <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password" minlength="8" maxlength="30" required>
+      <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password" minlength="8" maxlength="30" required>
       <p class="text-gray-600 text-xs italic">Must be at least 8 characters.</p>
     </div>
 
@@ -100,7 +103,7 @@
       <label class="block text-gray-700 text-sm font-bold mb-2">
         Password Confirmation
       </label>
-      <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password-confirm" minlength="8" maxlength="30" required>
+      <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" name="password-confirm" minlength="8" maxlength="30" required>
       <p class="text-gray-600 text-xs italic">Must be the same as above.</p>
     </div>
 

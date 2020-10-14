@@ -42,44 +42,103 @@
     <script src="/marked.min.js"></script>
 
   </head>
-  <body class="antialiased bg-gray-100">
+  <body class="antialiased bg-gray-200 flex flex-col min-h-screen">
 
-    <nav class="flex items-center justify-between flex-wrap my-6 container w-full lg:w-3/5 mx-auto text-xl lg:text-base">
-      <div class="flex items-center flex-shrink-0 ">
-        <p class="mr-6 text-gray-600">
-          <a href="/<%= @account.slug %>">
-            <span class="font-semibold text-2xl lg:text-xl tracking-tight"><%= @account.name %></span>
-          </a>
-        </p>
+    <header>
+      <div class="bg-white shadow-xs">
+        <nav class="flex items-center justify-between flex-wrap py-5 container w-full lg:w-3/5 mx-auto text-xl lg:text-base">
+          <div class="flex items-center flex-shrink-0 ">
+            <p class="mr-6 ">
+              <a href="/<%= @account.slug %>" class="font-semibold text-2xl lg:text-xl tracking-tight text-blue-600"><%= @account.name %>
+              </a>
+            </p>
+          </div>
+          <div class="block lg:flex lg:items-center lg:w-auto justify-end">
+            <% if (@account.resume) and (!@account.resume.empty?) %>
+            <p class="inline-block px-4 py-2 leading-none mt-0">
+              <a href="/resumes/<%= @account.resume %>" target="_blank" class="text-blue-600 font-medium hover:text-blue-300">Resume</a>
+            </p>
+            <% end %>
+            <p class="inline-block py-2 leading-none mt-0 mr-2">
+              <a href="/<%= @account.slug %>/contact" class="text-blue-600 font-medium hover:text-blue-300">Contact Me</a>
+            </p>
+          </div>
+        </nav>
       </div>
-      <div class="block lg:flex lg:items-center lg:w-auto justify-end">
-        <% if (@account.resume) and (!@account.resume.empty?) %>
-        <p class="inline-block px-4 py-2 leading-none text-gray hover:text-gray-600 mt-0">
-          <a href="/resumes/<%= @account.resume %>" target="_blank">Resume</a>
-        </p>
-        <% end %>
-        <p class="inline-block py-2 leading-none text-gray hover:text-gray-600 mt-0 mr-2">
-          <a href="/<%= @account.slug %>/contact" class="">Contact Me</a>
-        </p>
-      </div>
-    </nav>
-    <hr>
 
-    <div class="container mx-auto w-full lg:w-3/5">
-      <%= yield %>
-    </div>
+    </header>
 
-    <section class="mt-64">
-      <hr>
-      <div class="py-8 text-center text-gray-600 text-xl lg:text-base">
-        <p>
-          Build your portfolio in minutes -
-          <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
-            Class Folio
-          </a>
-        </p>
+    <main class="flex-grow">
+      <div class="container mx-auto w-full lg:w-3/5">
+        <%= yield %>
       </div>
-    </section>
+    </main>
+
+
+    <footer class="mt-16">
+      <section class="bg-white">
+        <hr>
+        <div class="py-6 text-center text-gray-600 text-xl lg:text-base font-semibold">
+          <p>
+            Build your portfolio in minutes -
+            <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
+              Class Folio
+            </a>
+          </p>
+        </div>
+      </section>
+    </footer>
+
+
+    <!-- Choose accent color -->
+    <% if (@account.accent_color) and (!@account.accent_color.empty?) %>
+      <% @color = @account.accent_color %>
+      <script>
+        const color = "<%= @color %>";
+
+        // Normal buttons
+        const bgClass = `bg-${color}-500`;
+        const hoverClass = `hover:bg-${color}-700`;
+
+        // Transparent buttons
+        const borderClass = `border-${color}-500`;
+        const borderHoverClass = `hover:bg-${color}-500`;
+        const borderTextClass = `text-${color}-700`
+
+        const buttons = Array.from(document.querySelectorAll('button'));
+
+        buttons.forEach(function(button) {
+          if (button.classList.contains("bg-blue-500")) {
+            button.classList.remove("bg-blue-500", "hover:bg-blue-700")
+            button.classList.add(bgClass, hoverClass)
+          }
+
+          if (button.classList.contains("border-blue-500")) {
+            button.classList.remove("border-blue-500", "hover:bg-blue-500", "text-blue-700")
+            button.classList.add(borderClass, borderHoverClass, borderTextClass)
+          }
+        })
+
+        const textClass = `text-${color}-600`
+        const links = Array.from(document.querySelectorAll('div p a'));
+
+        links.forEach(function(link) {
+          if (link.classList.contains("text-blue-600")) {
+            link.classList.remove("text-blue-600")
+            link.classList.add(textClass)
+          }
+        })
+
+        const hex = {'gray': '#718096', 'red': '#e53e3e', 'orange': '#dd6b20', 'yellow': '#d69e2e', 'green': '#38a169', 'teal': '#319795', 'blue': '#3182ce', 'indigo': '#5a67d8', 'purple': '#805ad5', 'pink': '#d53f8c'}
+
+        const markdownLinks = Array.from(document.querySelectorAll('.markdown-text p a'));
+        markdownLinks.forEach(function(link) {
+          link.style.color = hex[color]
+        })
+
+      </script>
+    <% end %>
+
 
   </body>
 </html>

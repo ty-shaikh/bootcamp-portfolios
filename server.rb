@@ -182,7 +182,7 @@ post '/register' do
 
     account = OpenStruct.new(
       name: params['name'],
-      summary: params['summary'],
+      summary: 'I want to work as a fullstack developer',
       email: email,
       headshot: 'placeholder.png',
       resume: '',
@@ -199,7 +199,7 @@ post '/register' do
     Mailer.new_account(recipient)
 
     # Notify me of new signup
-    Mailer.new_signup(params['name'])
+    Mailer.new_signup(params['name'], email)
 
     # Save user
     users.transaction do
@@ -266,6 +266,7 @@ end
 patch '/admin/:account/profile/update' do
 
   # Update account values
+  @account.name = params["name"]
   @account.summary = params["summary"]
   DB.update_account(@slug, @account)
 
@@ -359,7 +360,6 @@ end
 
 # Populate with account settings
 get '/admin/:account/settings' do
-  require_premium
   erb :"admin/settings", :layout => :"admin/layout"
 end
 
@@ -368,7 +368,6 @@ patch '/admin/:account/settings/theme' do
   # Update values
   @account.font_family = params["font_family"]
   @account.accent_color = params["accent_color"]
-  @account.bg_color = params['bg_color']
   DB.update_account(@slug, @account)
 
   flash[:success] = "We have updated your settings."
