@@ -42,7 +42,7 @@
     <script src="/marked.min.js"></script>
 
   </head>
-  <body class="antialiased <%= (@account.bg_color == 'white' || @account.bg_color.nil?) ? 'bg-white' : "bg-#{@account.bg_color}-100" %>">
+  <body class="antialiased bg-gray-100">
 
     <nav class="flex items-center justify-between flex-wrap my-6 container w-full lg:w-3/5 mx-auto text-xl lg:text-base">
       <div class="flex items-center flex-shrink-0 ">
@@ -69,66 +69,17 @@
       <%= yield %>
     </div>
 
-    <div class="mt-64">
+    <section class="mt-64">
       <hr>
-      <footer class="py-8 text-center text-gray-600 text-xl lg:text-base">
-        <div>
-          <p>
-            Build your portfolio in minutes -
-            <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
-              Class Folio
-            </a>
-          </p>
-        </div>
-      </footer>
-    </div>
-
-    <!-- Choose accent color -->
-    <% if (@account.accent_color) and (!@account.accent_color.empty?) %>
-      <% @color = @account.accent_color %>
-      <script>
-        const color = "<%= @color %>";
-
-        // Normal buttons
-        const bgClass = `bg-${color}-500`;
-        const hoverClass = `hover:bg-${color}-700`;
-
-        // Transparent buttons
-        const borderClass = `border-${color}-500`;
-        const borderHoverClass = `hover:bg-${color}-500`;
-        const borderTextClass = `text-${color}-700`
-
-        const buttons = Array.from(document.querySelectorAll('button'));
-
-        buttons.forEach(function(button) {
-          if (button.classList.contains("bg-blue-500")) {
-            button.classList.remove("bg-blue-500", "hover:bg-blue-700")
-            button.classList.add(bgClass, hoverClass)
-          }
-
-          if (button.classList.contains("border-blue-500")) {
-            button.classList.remove("border-blue-500", "hover:bg-blue-500", "text-blue-700")
-            button.classList.add(borderClass, borderHoverClass, borderTextClass)
-          }
-        })
-
-        const textClass = `text-${color}-600`
-        const links = Array.from(document.querySelectorAll('div p a'));
-
-        links.forEach(function(link) {
-          if (link.classList.contains("text-blue-600")) {
-            link.classList.remove("text-blue-600")
-            link.classList.add(textClass)
-          }
-        })
-
-        const markdownLinks = Array.from(document.querySelectorAll('.markdown-text p a'));
-        markdownLinks.forEach(function(link) {
-          link.style.color = "#d69e2e"
-        })
-
-      </script>
-    <% end %>
+      <div class="py-8 text-center text-gray-600 text-xl lg:text-base">
+        <p>
+          Build your portfolio in minutes -
+          <a href="http://www.classfol.io" target="_blank" class="text-blue-600">
+            Class Folio
+          </a>
+        </p>
+      </div>
+    </section>
 
   </body>
 </html>

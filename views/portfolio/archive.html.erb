@@ -5,3 +5,52 @@
   <meta property="og:url" content="http://www.google.com/">
   <meta name="twitter:card" content="summary">
 <% end %>
+
+
+
+    <!-- Choose accent color -->
+    <% if (@account.accent_color) and (!@account.accent_color.empty?) %>
+      <% @color = @account.accent_color %>
+      <script>
+        const color = "<%= @color %>";
+
+        // Normal buttons
+        const bgClass = `bg-${color}-500`;
+        const hoverClass = `hover:bg-${color}-700`;
+
+        // Transparent buttons
+        const borderClass = `border-${color}-500`;
+        const borderHoverClass = `hover:bg-${color}-500`;
+        const borderTextClass = `text-${color}-700`
+
+        const buttons = Array.from(document.querySelectorAll('button'));
+
+        buttons.forEach(function(button) {
+          if (button.classList.contains("bg-blue-500")) {
+            button.classList.remove("bg-blue-500", "hover:bg-blue-700")
+            button.classList.add(bgClass, hoverClass)
+          }
+
+          if (button.classList.contains("border-blue-500")) {
+            button.classList.remove("border-blue-500", "hover:bg-blue-500", "text-blue-700")
+            button.classList.add(borderClass, borderHoverClass, borderTextClass)
+          }
+        })
+
+        const textClass = `text-${color}-600`
+        const links = Array.from(document.querySelectorAll('div p a'));
+
+        links.forEach(function(link) {
+          if (link.classList.contains("text-blue-600")) {
+            link.classList.remove("text-blue-600")
+            link.classList.add(textClass)
+          }
+        })
+
+        const markdownLinks = Array.from(document.querySelectorAll('.markdown-text p a'));
+        markdownLinks.forEach(function(link) {
+          link.style.color = "#d69e2e"
+        })
+
+      </script>
+    <% end %>

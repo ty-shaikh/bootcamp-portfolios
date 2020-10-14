@@ -187,8 +187,6 @@ post '/register' do
       headshot: 'placeholder.png',
       resume: '',
       font_family: '',
-      accent_color: 'blue',
-      bg_color: 'gray',
       favicon: '',
       domain: '',
       host: '',
