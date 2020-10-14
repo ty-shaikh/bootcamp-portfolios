@@ -4,66 +4,39 @@
 
       <div class="mb-6">
         <label class="block text-gray-700 lg:text-sm font-bold mb-2">
-          Project Title
+          Title
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="title" value="<%= project.title %>"required>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="title" value="<%= project.title %>" placeholder="Map My Cab" required>
         <p class="text-gray-600 text-sm lg:text-xs italic">A title or name for your project.</p>
       </div>
 
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2">
-          Project Summary
+          Summary
         </label>
-        <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="4" name="summary" required><%= project.summary %></textarea>
+        <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="4" name="summary" placeholder="An API to analyze cab geo-location data and a simulated app for finding an available cab in real-time." required><%= project.summary %></textarea>
         <p class="text-gray-600 text-xs italic">A brief summary of your project.</p>
       </div>
 
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2">
-          Project Source Files (optional)
+          Source Files <span class="text-gray-600 text-sm font-medium">(optional)</span>
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="source-code" value="<%= project.source_code %>">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="source-code" value="<%= project.source_code %>" placeholder="https://github.com/PreetikaKuls/Insight-MapMyCab">
         <p class="text-gray-600 text-xs italic">A link to a GitHub repo or something similar.</p>
       </div>
 
-      <% if @account.premium == true %>
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2">
-          Project Video Walkthrough (optional)
+          Video Walkthrough <span class="text-gray-600 text-sm font-medium">(optional)</span>
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="loom-video" value="<%= project.loom_url%>">
-        <p class="text-gray-600 text-xs italic">Copy and paste Loom public link, not entire embed code.</p>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="loom-video" value="<%= project.loom_url%>" placeholder="https://www.loom.com/share/62c88617c03e48a1bc4883691889e412">
+        <p class="text-gray-600 text-xs italic">We support <a href="https://www.loom.com/" target="_blank" class="text-blue-600"> Loom videos</a>. Copy and paste the video's public link, not the entire embed code.</p>
       </div>
-      <% end %>
-
-      <% if @account.premium == true %>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">
-          Private Project (Optional)
-        </label>
-        <div class="relative w-full">
-          <select class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="private">
-            <% values = {"No": false, "Yes": true} %>
-            <% values.each do |key, value| %>
-              <% if project.hidden == value %>
-              <option value="<%= value %>" selected><%= key %></option>
-              <% else %>
-              <option value="<%= value %>"><%= key %></option>
-              <% end %>
-            <% end %>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700" style="bottom: 8px; right: 5px">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-          </div>
-        </div>
-        <p class="text-gray-600 text-sm lg:text-xs italic">Private projects don't appear on your portfolio home page. They are published, so you can share the direct link to anyone.
-        </p>
-      </div>
-      <% end %>
 
       <div class="mb-6">
         <label class="block text-gray-700 lg:text-sm font-bold mb-2">
-          Project Description
+          Description
         </label>
         <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="description" type="text" rows="20" name="description"><%= project.description %></textarea>
         <p class="text-gray-600 text-sm lg:text-xs italic mt-2">This field uses Markdown. Click the question mark to learn how to format your text.</p>
@@ -71,7 +44,7 @@
 
       <div class="mb-6">
         <label class="block text-gray-700 lg:text-sm font-bold mb-2">
-          Project Graphic <span class="text-gray-600, text-xs font-light">(optional)</span>
+          Graphic <span class="text-gray-600 text-sm font-medium">(optional)</span>
         </label>
 
         <% if (project.graphic) and (!project.graphic.empty?) %>
