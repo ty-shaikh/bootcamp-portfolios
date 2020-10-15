@@ -13,6 +13,7 @@ require 'uri'
 require './helpers/mailer'
 require './helpers/auth'
 require './helpers/db'
+require './helpers/portfolio'
 
 Dotenv.load
 
@@ -80,8 +81,7 @@ hostnames.each do |host|
     end
 
     get '/' do
-      @projects = DB.current_published_projects(@account.slug)
-      @articles = DB.current_articles(@account.slug)
+      @projects, @articles = Portfolio.get_index(@account.slug)
       erb :"portfolio/index", :layout => :"portfolio/layout"
     end
 
@@ -90,25 +90,22 @@ hostnames.each do |host|
     end
 
     post '/contact' do
-      recipient = settings.development? ? 'me@tyshaikh.com' : @account.email
-      Mailer.contact_request(recipient, params['name'], params['email'], params['message'])
-
-      flash[:success] = "We have sent your message."
+      Portfolio.post_contact(@account.email, params['name'], params['email'], params['message'])
       redirect "/contact"
     end
 
     get '/:id' do
-      @project = DB.current_project(@account.slug, params['id'])
+      @project = Portfolio.get_project(@account.slug, params['id'])
       erb :"portfolio/show_project", :layout => :"portfolio/layout"
     end
 
     get '/:id/preview' do
-      @project = DB.current_project(@account.slug, params['id'])
+      @project = Portfolio.get_project(@account.slug, params['id'])
       erb :"portfolio/preview", :layout => :"client/layout"
     end
 
     get '/blog/:id' do
-      @article = DB.current_article(@account.slug, params['id'])
+      @article = Portfolio.get_article(@account.slug, params['id'])
       erb :"portfolio/show_article", :layout => :"portfolio/layout"
     end
 
@@ -762,8 +759,7 @@ end
 
 get '/:account' do
   @account = DB.current_account(params['account'])
-  @projects = DB.current_published_projects(@account.slug)
-  @articles = DB.current_articles(@account.slug)
+  @projects, @articles = Portfolio.get_index(@account.slug)
   erb :"portfolio/index", :layout => :"portfolio/layout"
 end
 
@@ -774,30 +770,27 @@ end
 
 post '/:account/contact' do
   @account = DB.current_account(params['account'])
-  recipient = settings.development? ? 'me@tyshaikh.com' : @account.email
-  Mailer.contact_request(recipient, params['name'], params['email'], params['message'])
-
-  flash[:success] = "We have sent your message."
+  Portfolio.post_contact(@account.email, params['name'], params['email'], params['message'])
   redirect "/#{@account.slug}/contact"
 end
 
 # View a project
 get '/:account/:id' do
   @account = DB.current_account(params['account'])
-  @project = DB.current_project(@account.slug, params['id'])
+  @project = Portfolio.get_project(@account.slug, params['id'])
   erb :"portfolio/show_project", :layout => :"portfolio/layout"
 end
 
 get '/:account/:id/preview' do
   @account = DB.current_account(params['account'])
-  @project = DB.current_project(@account.slug, params['id'])
+  @project = Portfolio.get_project(@account.slug, params['id'])
   erb :"portfolio/preview", :layout => :"client/layout"
 end
 
 # View an article
 get '/:account/blog/:id' do
   @account = DB.current_account(params['account'])
-  @article = DB.current_article(@account.slug, params['id'])
+  @article = Portfolio.get_article(@account.slug, params['id'])
   erb :"portfolio/show_article", :layout => :"portfolio/layout"
 end
 
