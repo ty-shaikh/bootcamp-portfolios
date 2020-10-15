@@ -38,7 +38,7 @@ arr.each do |account|
   Dir.chdir("/etc/nginx/sites-available") do
 
     # duplicate domain template
-    FileUtils.cp("#{Dir.pwd}/domain", "#{Dir.pwd}/#{domain}")
+    FileUtils.cp("#{Dir.pwd}/domain_bootcamp", "#{Dir.pwd}/#{domain}")
 
     # replace domain placeholder with actual domain name
     file_name = "#{Dir.pwd}/#{domain}"
@@ -54,7 +54,7 @@ arr.each do |account|
 
     # Restart NGINX (shell)
     system("sudo systemctl restart nginx")
-    
+
   end
 
 end
