@@ -90,7 +90,8 @@ hostnames.each do |host|
     end
 
     post '/contact' do
-      Portfolio.post_contact(@account.email, params['name'], params['email'], params['message'])
+      Portfolio.post_contact(settings, @account.email, params['name'], params['email'], params['message'])
+      flash[:success] = "We have sent your message."
       redirect "/contact"
     end
 
@@ -770,7 +771,8 @@ end
 
 post '/:account/contact' do
   @account = DB.current_account(params['account'])
-  Portfolio.post_contact(@account.email, params['name'], params['email'], params['message'])
+  Portfolio.post_contact(settings, @account.email, params['name'], params['email'], params['message'])
+  flash[:success] = "We have sent your message."
   redirect "/#{@account.slug}/contact"
 end
 

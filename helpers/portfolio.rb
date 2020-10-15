@@ -1,4 +1,5 @@
 require './helpers/db'
+require './helpers/mailer'
 
 class Portfolio
 
@@ -8,10 +9,10 @@ class Portfolio
     return projects, articles
   end
 
-  def self.post_contact(account_email, name, email, message)
+  def self.post_contact(settings, account_email, name, email, message)
     recipient = settings.development? ? 'me@tyshaikh.com' : account_email
     Mailer.contact_request(recipient, name, email, message)
-    flash[:success] = "We have sent your message."
+
   end
 
   def self.get_project(account_slug, project_id)
