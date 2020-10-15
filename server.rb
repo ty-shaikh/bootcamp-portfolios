@@ -94,7 +94,7 @@ hostnames.each do |host|
       Mailer.contact_request(recipient, params['name'], params['email'], params['message'])
 
       flash[:success] = "We have sent your message."
-      redirect "/#{@account.slug}/contact"
+      redirect "/contact"
     end
 
     get '/:id' do
