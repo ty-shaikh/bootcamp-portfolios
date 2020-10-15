@@ -6,7 +6,7 @@
         <label class="block text-gray-700 lg:text-sm font-bold mb-2">
           Title
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="title" value="<%= article.title %>" required>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="title" value="<%= article.title %>" placeholder="Create and Query a NoSQL Table" required>
         <p class="text-gray-600 text-sm lg:text-xs italic">A title for your article.</p>
       </div>
 
@@ -14,8 +14,16 @@
         <label class="block text-gray-700 text-sm font-bold mb-2">
           Summary
         </label>
-        <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="4" name="summary" required><%= article.summary %></textarea>
+        <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="4" name="summary" placeholder="In this tutorial, you will learn how to create a simple table, add data, scan and query the data, delete data, and delete the table by using the DynamoDB console." required><%= article.summary %></textarea>
         <p class="text-gray-600 text-xs italic">A brief summary of your article.</p>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Source Files <span class="text-gray-600 text-sm font-medium">(optional)</span>
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="text" name="source-code" value="<%= article.source_code %>" placeholder="https://github.com/awsdocs/amazon-dynamodb-developer-guide">
+        <p class="text-gray-600 text-xs italic">A link to a GitHub repo or something similar.</p>
       </div>
 
       <div class="mb-6">

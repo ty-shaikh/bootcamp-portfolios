@@ -1,9 +1,4 @@
-<% content_for :head do %>
-  <title><%= @account.name %> - Portfolio</title>
-<% end %>
-
 <section class="mt-8 flex items-center justify-between">
-
   <div>
     <p class="text-red-500 font-semibold text-2xl lg:text-base">
       <a href="<%= @other_host ? "/" : "/#{@account.slug}" %>">
@@ -11,7 +6,6 @@
       </a>
     </p>
   </div>
-
   <div class="">
     <% if (@project.source_code) and (!@project.source_code.empty?) %>
     <a href="<%= @project.source_code %>" target="_blank">
@@ -22,7 +16,6 @@
     </a>
     <% end %>
   </div>
-
 </section>
 
 <section class="mt-10">

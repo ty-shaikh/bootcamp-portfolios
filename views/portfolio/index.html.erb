@@ -36,7 +36,7 @@
     </p>
   </div>
   <% @articles.each do |article| %>
-    <a href="<%= @other_host ? "/#{article.slug}" : "/#{@account.slug}/blog/#{article.slug}" %>">
+    <a href="<%= @other_host ? "/blog/#{article.slug}" : "/#{@account.slug}/blog/#{article.slug}" %>">
       <%= erb :'portfolio/_article', locals: { article: article } %>
     </a>
   <% end %>

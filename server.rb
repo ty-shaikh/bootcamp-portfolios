@@ -673,6 +673,7 @@ post '/admin/:account/article' do
   article = OpenStruct.new(
     title: params["title"],
     summary: params["summary"],
+    source_code: params["source-code"],
     description: params["description"],
     graphic: new_filename || '',
     created: date,
@@ -733,6 +734,7 @@ patch '/admin/:account/articles/:id' do
   article.title = params["title"]
   article.summary = params["summary"]
   article.description = params["description"]
+  article.source_code = params["source-code"]
 
   store = YAML::Store.new "./data/#{@slug}/articles.store"
   store.transaction do
