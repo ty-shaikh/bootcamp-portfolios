@@ -12,7 +12,6 @@ class Portfolio
   def self.post_contact(settings, account_email, name, email, message)
     recipient = settings.development? ? 'me@tyshaikh.com' : account_email
     Mailer.contact_request(recipient, name, email, message)
-
   end
 
   def self.get_project(account_slug, project_id)

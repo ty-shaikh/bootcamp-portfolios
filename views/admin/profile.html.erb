@@ -18,9 +18,9 @@
   <div class="font-bold text-2xl mb-2">
     Profile Settings
   </div>
-  <div class="markdown-text mb-3">
+  <div class="mb-3">
     <p>
-      This profile information appears on your portfolio site. Please keep it updated.
+      This information appears on your home page.
     </p>
   </div>
 
@@ -57,12 +57,32 @@
   <div class="font-bold text-2xl mb-2 ">
     Resume Settings
   </div>
-  <div class="mb-4">
+  <div class="mb-3">
+    <p>
+      Your resume will be linked on the top navigation.
+    </p>
+  </div>
+
+  <div class="flex items-center">
     <% if (@account.resume) and (!@account.resume.empty?) %>
-    <div class="mb-2">
-      <a href="/resumes/<%= @account.resume %>" class="text-blue-600" target="_blank">View current resume</a>
+    <div class="mr-4">
+      <a href="/resumes/<%= @account.resume %>" target="_blank">
+        <button class="text-blue-500 bg-white hover:text-white hover:bg-blue-500 font-semibold border border-blue-500 p-2 rounded" type="submit">
+          View resume
+        </button>
+      </a>
+    </div>
+    <div class="">
+      <form method="POST" action="profile/resume" onsubmit="return confirm('Are you sure you remove this resume?');">
+        <div style="margin:0;padding:0">
+          <input name="_method" value="delete" type="hidden" />
+          <button class="text-red-500 bg-white hover:text-white hover:bg-red-500 font-semibold border border-red-500 p-2 rounded" type="submit">Delete resume</button>
+        </div>
+      </form>
     </div>
     <% end %>
+  </div>
+  <div class="mb-4">
     <form class="my-6" method="POST" action="profile/resume" enctype="multipart/form-data">
       <input name="_method" value="patch" type="hidden">
       <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-3 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="resume" type="file" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/octet-stream" id="resume-upload" required>
@@ -82,7 +102,7 @@
   <div class="font-bold text-2xl mb-2">
     Login Settings
   </div>
-  <div class="markdown-text mb-3">
+  <div class="mb-3">
     <p>
       If you want to change your password.
     </p>

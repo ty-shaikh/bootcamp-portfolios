@@ -364,6 +364,15 @@ patch '/admin/:account/profile/resume' do
   redirect "/admin/#{@slug}/profile"
 end
 
+# Remove resume
+delete '/admin/:account/profile/resume' do
+  @account.resume = ''
+  DB.update_account(@slug, @account)
+
+  flash[:success] = "We have removed your resume."
+  redirect "/admin/#{@slug}/profile"
+end
+
 # Update headshot
 patch '/admin/:account/profile/headshot' do
 

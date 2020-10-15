@@ -57,11 +57,11 @@
           </div>
           <div class="block lg:flex lg:items-center lg:w-auto justify-end">
             <% if (@account.resume) and (!@account.resume.empty?) %>
-            <p class="inline-block px-4 py-2 leading-none mt-0">
+            <p class="inline-block px-4 py-2 leading-none mr-4">
               <a href="/resumes/<%= @account.resume %>" target="_blank" class="text-blue-600 font-medium hover:text-blue-300">Resume</a>
             </p>
             <% end %>
-            <p class="inline-block py-2 leading-none mt-0 mr-2">
+            <p class="inline-block py-2 leading-none">
               <a
                 href="<%= @other_host ? "/contact" : "/#{@account.slug}/contact" %>"
                 class="text-blue-600 font-medium hover:text-blue-300">Contact Me</a>
@@ -124,12 +124,18 @@
         })
 
         const textClass = `text-${color}-600`
+        const hoverTextClass = `hover:text-${color}-300`
         const links = Array.from(document.querySelectorAll('div p a'));
 
         links.forEach(function(link) {
           if (link.classList.contains("text-blue-600")) {
             link.classList.remove("text-blue-600")
             link.classList.add(textClass)
+          }
+
+          if (link.classList.contains("hover:text-blue-300")) {
+            link.classList.remove("hover:text-blue-300")
+            link.classList.add(hoverTextClass)
           }
         })
 
