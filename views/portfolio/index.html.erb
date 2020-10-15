@@ -21,7 +21,7 @@
     </p>
   </div>
   <% @projects.each do |project| %>
-    <a href="<%= @other_host ? project.slug : "<% @account.slug %>/<%= project.slug %>" %>">
+    <a href="<%= @other_host ? "/#{project.slug}" : "/#{@account.slug}/#{project.slug}" %>">
       <%= erb :'portfolio/_project', locals: { project: project } %>
     </a>
   <% end %>
@@ -36,8 +36,7 @@
     </p>
   </div>
   <% @articles.each do |article| %>
-    <a href="<%= @other_host ? "blog/<%= article.slug %>" : "<% @account.slug %>/blog/<%= article.slug %>" %>">
-    <!-- <a href="<%= params['account'] %>/blog/<%= article.slug %>"> -->
+    <a href="<%= @other_host ? "/#{article.slug}" : "/#{@account.slug}/blog/#{article.slug}" %>">
       <%= erb :'portfolio/_article', locals: { article: article } %>
     </a>
   <% end %>

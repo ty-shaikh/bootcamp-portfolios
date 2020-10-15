@@ -6,7 +6,7 @@
 
   <div>
     <p class="text-red-500 font-semibold text-2xl lg:text-base">
-      <a href="<%= @other_host ? "/" : @account.slug %>">
+      <a href="<%= @other_host ? "/" : "/#{@account.slug}" %>">
         &larr; Back to the portfolio
       </a>
     </p>

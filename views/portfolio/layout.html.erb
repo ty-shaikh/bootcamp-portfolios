@@ -49,7 +49,9 @@
         <nav class="flex items-center justify-between flex-wrap py-5 container w-full lg:w-3/5 mx-auto text-xl lg:text-base">
           <div class="flex items-center flex-shrink-0 ">
             <p class="mr-6 ">
-              <a href="/<%= @account.slug %>" class="font-semibold text-2xl lg:text-xl tracking-tight text-blue-600"><%= @account.name %>
+              <a
+                href="<%= @other_host ? "/" : "/#{@account.slug}" %>"
+                class="font-semibold text-2xl lg:text-xl tracking-tight text-blue-600"><%= @account.name %>
               </a>
             </p>
           </div>
@@ -60,7 +62,9 @@
             </p>
             <% end %>
             <p class="inline-block py-2 leading-none mt-0 mr-2">
-              <a href="/<%= @account.slug %>/contact" class="text-blue-600 font-medium hover:text-blue-300">Contact Me</a>
+              <a
+                href="<%= @other_host ? "/contact" : "/#{@account.slug}/contact" %>"
+                class="text-blue-600 font-medium hover:text-blue-300">Contact Me</a>
             </p>
           </div>
         </nav>
