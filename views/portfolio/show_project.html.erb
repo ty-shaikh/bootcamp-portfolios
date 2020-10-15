@@ -30,7 +30,7 @@
 </section>
 
 <% if (@project.loom_code) and (!@project.loom_code.empty?) %>
-<section class="rounded border border-gray-300 bg-white p-10 my-8">
+<section class="rounded border border-gray-300 bg-white p-10 my-8 shadow-sm">
   <div class="flex items-center justify-center">
     <iframe width="640" height="390" src="https://www.loom.com/embed/<%= @project.loom_code %>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   </div>
@@ -39,7 +39,7 @@
 <% end %>
 
 <section class="mb-4">
-  <div class="text-3xl lg:text-base rounded border border-gray-300 bg-white px-10 py-2">
+  <div class="text-3xl lg:text-base rounded border border-gray-300 bg-white px-10 py-2 shadow-sm">
     <p class="markdown-text text-black"><%= @project.description %></p>
   </div>
 </section>
