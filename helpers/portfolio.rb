@@ -4,7 +4,7 @@ require './helpers/mailer'
 class Portfolio
 
   def self.get_index(account_slug)
-    projects = DB.current_published_projects(account_slug)
+    projects = DB.current_projects(account_slug)
     articles = DB.current_articles(account_slug)
     return projects, articles
   end

@@ -109,6 +109,7 @@
         const borderHoverClass = `hover:bg-${color}-500`;
         const borderTextClass = `text-${color}-700`
 
+        // Get all buttons
         const buttons = Array.from(document.querySelectorAll('button'));
 
         buttons.forEach(function(button) {
@@ -123,8 +124,11 @@
           }
         })
 
+        // Link Styles
         const textClass = `text-${color}-600`
         const hoverTextClass = `hover:text-${color}-300`
+
+        // Get all links
         const links = Array.from(document.querySelectorAll('div p a'));
 
         links.forEach(function(link) {
