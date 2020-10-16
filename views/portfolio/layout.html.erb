@@ -51,7 +51,7 @@
             <p class="mr-6 ">
               <a
                 href="<%= @other_host ? "/" : "/#{@account.slug}" %>"
-                class="font-semibold text-2xl lg:text-xl tracking-tight text-blue-600"><%= @account.name %>
+                class="font-semibold text-2xl lg:text-xl tracking-tight text-blue-600"><%= @page || @account.name %>
               </a>
             </p>
           </div>

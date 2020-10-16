@@ -1,0 +1,78 @@
+<section class="my-8 w-full lg:w-4/6 mx-auto">
+  <div>
+    <p class="text-red-500 font-semibold">
+      <a href="/admin/<%= @slug %>/projects">
+        &larr; View all projects
+      </a>
+    </p>
+  </div>
+</section>
+
+<section class="w-full lg:w-4/6 mx-auto">
+  <% if flash %>
+    <%= erb :'shared/alert', locals: { flash: flash  } %>
+  <% end %>
+</section>
+
+
+<div class="w-full lg:w-4/6 mx-auto my-6 flex items-center justify-between">
+  <div class="w-4/5">
+    <p class="font-bold text-2xl mb-1">
+      Projects
+    </p>
+  </div>
+</div>
+
+<div class="w-full lg:w-5/6 mx-auto">
+
+  <% if @projects.length == 0 %>
+  <div class="rounded shadow my-4 p-8 bg-white">
+    <p>
+      There are no projects published yet. Create one now!
+    </p>
+  </div>
+  <% end %>
+
+  <% if @projects.length > 0 %>
+  <div class="rounded shadow my-4 bg-white w-full lg:w-5/6 mx-auto">
+    <table class="table-fixed text-left w-full">
+    <thead>
+      <tr class="bg-gray-300">
+        <th class="px-6 py-2">Project</th>
+        <th class="px-6 py-2">Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each_with_index do |project, index| %>
+      <tr class="<%= index % 2 == 0 ? '' : 'bg-gray-100' %> border-b hover:shadow-lg hover:bg-gray-200">
+        <td class="px-6 py-10">
+          <p class="text-xl text-blue-600">
+            <%= project.title %>
+          </p>
+        </td>
+        <td class="px-6 py-2">
+          <form
+            method="POST"
+            action="/admin/<%= @slug %>/projects/<%= project.slug %>/position"
+            class="">
+
+            <div class="flex">
+              <input name="_method" value="patch" type="hidden" />
+              <div class="relative w-20  mr-4" style="">
+                <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" name="position" value="<%= project.position %>">
+              </div>
+              <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update</button>
+            </div>
+
+          </form>
+
+        </td>
+      </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+  </div>
+  <% end %>
+
+</div>

@@ -28,7 +28,11 @@ class DB
       store.roots.each { |root| items.append(store[root]) }
     end
 
-    return items.reverse
+    items.reverse!
+    sorted_items = items.sort_by { |item| item.position }
+
+    return sorted_items
+
   end
 
   def self.current_published_projects(slug)
@@ -56,7 +60,10 @@ class DB
       store.roots.each { |root| items.append(store[root]) }
     end
 
-    return items.reverse
+    items.reverse!
+    sorted_items = items.sort_by { |item| item.position }
+
+    return sorted_items
   end
 
   def self.current_domains

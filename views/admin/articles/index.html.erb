@@ -16,19 +16,33 @@
 
 
 <div class="w-full lg:w-3/4 mx-auto my-6 flex items-center justify-between">
-  <div class="w-4/5">
+  <div class="w-3/5">
     <p class="font-bold text-2xl mb-1">
       Articles
     </p>
   </div>
+
   <div class="">
-    <a href="/admin/<%= @slug %>/article/new">
-      <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
-        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
-        <span>New article</span>
-      </button>
-    </a>
+    <div class="mr-2 inline-flex">
+      <a href="/admin/<%= @slug %>/article/new">
+        <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
+          <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/></svg>
+          <span>New article</span>
+        </button>
+      </a>
+    </div>
+
+    <div class="inline-flex">
+      <a href="/admin/<%= @slug %>/articles/position">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-flex items-center" type="button">
+          <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/></svg>
+          <span>Change order</span>
+        </button>
+      </a>
+    </div>
   </div>
+
+
 </div>
 
 <div class="w-full lg:w-3/4 mx-auto">

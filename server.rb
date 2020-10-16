@@ -81,6 +81,7 @@ hostnames.each do |host|
     end
 
     get '/' do
+      @page = 'Portfolio'
       @projects, @articles = Portfolio.get_index(@account.slug)
       erb :"portfolio/index", :layout => :"portfolio/layout"
     end
@@ -548,6 +549,7 @@ post '/admin/:account/project' do
     description: params["description"],
     graphic: new_filename || '',
     hidden: hidden || false,
+    position: 1,
     created: date,
     slug: project_slug
   )
@@ -563,6 +565,25 @@ post '/admin/:account/project' do
 
   flash[:success] = "You added a new project."
   redirect "/admin/#{@slug}/projects"
+end
+
+# View all positions
+get '/admin/:account/projects/position' do
+  @projects = DB.current_projects(@slug)
+  erb :"admin/projects/position", :layout => :"admin/layout"
+end
+
+patch '/admin/:account/projects/:id/position' do
+  project_slug = params['id']
+  project = DB.current_project(@slug, project_slug)
+  project.position = params["position"].to_i
+
+  store = YAML::Store.new "./data/#{@slug}/projects.store"
+  store.transaction do
+    store[project_slug] = project
+  end
+
+  redirect "/admin/#{@slug}/projects/position"
 end
 
 # Show details about a project
@@ -683,6 +704,7 @@ post '/admin/:account/article' do
     source_code: params["source-code"],
     description: params["description"],
     graphic: new_filename || '',
+    position: 1,
     created: date,
     slug: article_slug
   )
@@ -699,6 +721,26 @@ post '/admin/:account/article' do
   flash[:success] = "You added a new article."
   redirect "/admin/#{@slug}/articles"
 end
+
+# View all positions
+get '/admin/:account/articles/position' do
+  @articles = DB.current_articles(@slug)
+  erb :"admin/articles/position", :layout => :"admin/layout"
+end
+
+patch '/admin/:account/articles/:id/position' do
+  article_slug = params['id']
+  article = DB.current_article(@slug, article_slug)
+  article.position = params["position"].to_i
+
+  store = YAML::Store.new "./data/#{@slug}/articles.store"
+  store.transaction do
+    store[article_slug] = article
+  end
+
+  redirect "/admin/#{@slug}/articles/position"
+end
+
 
 # Show details about an article
 get '/admin/:account/articles/:id' do
@@ -768,6 +810,7 @@ end
 ########
 
 get '/:account' do
+  @page = 'Portfolio'
   @account = DB.current_account(params['account'])
   @projects, @articles = Portfolio.get_index(@account.slug)
   erb :"portfolio/index", :layout => :"portfolio/layout"
