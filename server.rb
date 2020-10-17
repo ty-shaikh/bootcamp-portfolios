@@ -247,6 +247,10 @@ post '/register' do
       favicon: '',
       domain: '',
       host: '',
+      twitter: '',
+      medium: '',
+      github: '',
+      linkedin: '',
       premium: false,
       slug: slug,
     )
@@ -325,6 +329,10 @@ patch '/admin/:account/profile/update' do
   # Update account values
   @account.name = params["name"]
   @account.summary = params["summary"]
+  @account.github = params["github"]
+  @account.linkedin = params["linkedin"]
+  @account.medium = params["medium"]
+  @account.twitter = params["twitte"]
   DB.update_account(@slug, @account)
 
   flash[:success] = "We have updated your settings."

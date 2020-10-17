@@ -29,7 +29,7 @@
 
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2">
-        Your Name
+        Name
       </label>
       <input class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="name" value="<%= @account.name %>" required>
       <p class="text-gray-600 text-xs italic">The slug associated with your portfolio will stay the same.</p>
@@ -37,10 +37,38 @@
 
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2">
-        Your Summary
+        Summary
       </label>
       <textarea class="appearance-none border-2 border-gray-300 rounded w-full py-2 px-4 mb-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" rows="2" name="summary" required><%= @account.summary %></textarea>
       <p class="text-gray-600 text-xs italic">A brief description of your background and goals.</p>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        GitHub Profile <span class="text-gray-600 text-sm font-medium">(optional)</span>
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="github" value="<%= @account.github %>" placeholder="https://github.com/ty-shaikh">
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        LinkedIn Profile <span class="text-gray-600 text-sm font-medium">(optional)</span>
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="linkedin" value="<%= @account.linkedin %>" placeholder="https://www.linkedin.com/in/shaikht/">
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        Medium Profile <span class="text-gray-600 text-sm font-medium">(optional)</span>
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="medium" value="<%= @account.medium %>" placeholder="https://medium.com/@tyshaikh">
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        Twitter Profile <span class="text-gray-600 text-sm font-medium">(optional)</span>
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline" type="url" name="twitter" value="<%= @account.twitter %>" placeholder="https://twitter.com/ty_shaikh">
     </div>
 
     <div class="flex items-center justify-between">
