@@ -275,7 +275,7 @@ post '/register' do
     # Create folders and files
     Dir.mkdir("./data/#{slug}")
     FileUtils.cp("./data/seed.store", "./data/#{slug}/projects.store")
-    File.write("./data/#{slug}/.articles", "")
+    FileUtils.cp("./data/articles.store", "./data/#{slug}/projects.store")
 
     flash[:slug] = slug
     redirect '/confirmation'
