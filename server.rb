@@ -64,57 +64,6 @@ helpers do
 end
 
 ########
-## Public Portfolios
-########
-
-# Create code for looping hostnames
-hostnames = DB.current_hostnames
-
-hostnames.each do |host|
-  namespace :host_name => host.domain do
-
-    # Set the multi-tenant account
-    before do
-      @other_host = true
-      @other_host_route = ''
-      @account = DB.current_account(host.slug)
-    end
-
-    get '/' do
-      @page = 'Portfolio'
-      @projects, @articles = Portfolio.get_index(@account.slug)
-      erb :"portfolio/index", :layout => :"portfolio/layout"
-    end
-
-    get '/contact' do
-      erb :"portfolio/contact", :layout => :"portfolio/layout"
-    end
-
-    post '/contact' do
-      Portfolio.post_contact(settings, @account.email, params['name'], params['email'], params['message'])
-      flash[:success] = "We have sent your message."
-      redirect "/contact"
-    end
-
-    get '/:id' do
-      @project = Portfolio.get_project(@account.slug, params['id'])
-      erb :"portfolio/show_project", :layout => :"portfolio/layout"
-    end
-
-    get '/:id/preview' do
-      @project = Portfolio.get_project(@account.slug, params['id'])
-      erb :"portfolio/preview", :layout => :"client/layout"
-    end
-
-    get '/blog/:id' do
-      @article = Portfolio.get_article(@account.slug, params['id'])
-      erb :"portfolio/show_article", :layout => :"portfolio/layout"
-    end
-
-  end
-end
-
-########
 ## Public Routes
 ########
 
