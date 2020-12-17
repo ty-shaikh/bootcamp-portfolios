@@ -1,7 +1,7 @@
 require 'mailgun-ruby'
 
 class Mailer
-  API_KEY = "key-0916b0e78ee39f94534d56475d32b015"
+  API_KEY = ''
 
   def self.new_account(email)
     mg_client = Mailgun::Client.new API_KEY
